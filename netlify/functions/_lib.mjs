@@ -171,3 +171,14 @@ export async function sync({ force = false } = {}) {
   await saveState(st);
   return { state: st, news };
 }
+
+/** Publie le post de lancement sur FB et IG et l'enregistre comme post concours. */
+export async function publishLaunch(cfg, texts) {
+  const out = {};
+  const fb = await gpost(`/${cfg.fbPageId}/photos`, { url: "https://bopassage.fr/img/jeu/lancement-carre.jpg", message: texts.Facebook });
+  out.fbPostId = fb.post_id || fb.id;
+  const c = await gpost(`/${cfg.igUserId}/media`, { image_url: "https://bopassage.fr/img/jeu/lancement-carre.jpg", caption: texts.Instagram });
+  const p = await gpost(`/${cfg.igUserId}/media_publish`, { creation_id: c.id });
+  out.igMediaId = p.id;
+  return out;
+}
