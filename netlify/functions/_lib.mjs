@@ -15,7 +15,7 @@ export function tiersFor(platform, cfg) {
 }
 const G = "https://graph.facebook.com/v21.0";
 
-export const store = () => getStore("jeu");
+export const store = () => getStore({ name: "jeu", consistency: "strong" });
 
 export async function loadState() {
   const s = store();
