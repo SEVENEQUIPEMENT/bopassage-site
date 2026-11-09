@@ -21,8 +21,8 @@ async function handle(req) {
   if (body.action === "posts") { await resolveIds(st.config); await saveState(st); const posts = await recentPosts(st.config); return J({ ok: true, posts }); }
   if (body.action === "publish-launch") {
     await resolveIds(st.config);
-    const ids = await publishLaunch(st.config, body.texts || {});
-    st.config = { ...st.config, igMediaId: ids.igMediaId, fbPostId: ids.fbPostId };
+    const ids = await publishLaunch(st.config, body.texts || {}, body.opts || {});
+    st.config = { ...st.config, ...(ids.igMediaId ? { igMediaId: ids.igMediaId } : {}), ...(ids.fbPostId ? { fbPostId: ids.fbPostId } : {}) };
     await saveState(st);
     return J({ ok: true, ids, ...pub(st) });
   }

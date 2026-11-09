@@ -132,9 +132,7 @@ export async function publishWinner(platform, tier, winner, cfg) {
   } else {
     const idx = tiersFor(platform, cfg).findIndex(x => x.n === tier);
     const img = `https://bopassage.fr/img/jeu/gagnant-${[300,500,700,1000][idx] || 1000}.jpg`;
-    const c = await gpost(`/${cfg.igUserId}/media`, { image_url: img, caption: msg });
-    const p = await gpost(`/${cfg.igUserId}/media_publish`, { creation_id: c.id });
-    return p.id;
+    return igPublish(cfg, img, msg);
   }
 }
 
@@ -175,12 +173,25 @@ export async function sync({ force = false } = {}) {
 }
 
 /** Publie le post de lancement sur FB et IG et l'enregistre comme post concours. */
-export async function publishLaunch(cfg, texts) {
-  const out = {};
-  const fb = await gpost(`/${cfg.fbPageId}/photos`, { url: "https://bopassage.fr/img/jeu/lancement-carre.jpg", message: texts.Facebook }, cfg.fbPageToken);
-  out.fbPostId = fb.post_id || fb.id;
-  const c = await gpost(`/${cfg.igUserId}/media`, { image_url: "https://bopassage.fr/img/jeu/lancement-carre.jpg", caption: texts.Instagram });
+/** Attend que le conteneur IG soit prêt puis publie. */
+export async function igPublish(cfg, imageUrl, caption) {
+  const c = await gpost(`/${cfg.igUserId}/media`, { image_url: imageUrl, caption });
+  for (let i = 0; i < 15; i++) {
+    const st = await gget(`/${c.id}`, { fields: "status_code,status" });
+    if (st.status_code === "FINISHED") break;
+    if (st.status_code === "ERROR") throw new Error("Conteneur Instagram en erreur : " + (st.status || ""));
+    await new Promise(r => setTimeout(r, 1500));
+  }
   const p = await gpost(`/${cfg.igUserId}/media_publish`, { creation_id: c.id });
-  out.igMediaId = p.id;
+  return p.id;
+}
+export async function publishLaunch(cfg, texts, opts = {}) {
+  const out = {};
+  const img = "https://bopassage.fr/img/jeu/lancement-carre.jpg";
+  if (!opts.skipFacebook) {
+    const fb = await gpost(`/${cfg.fbPageId}/photos`, { url: img, message: texts.Facebook }, cfg.fbPageToken);
+    out.fbPostId = fb.post_id || fb.id;
+  }
+  if (!opts.skipInstagram) out.igMediaId = await igPublish(cfg, img, texts.Instagram);
   return out;
 }
