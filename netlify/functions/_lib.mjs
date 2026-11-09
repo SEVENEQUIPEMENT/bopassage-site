@@ -7,6 +7,12 @@ export const TIERS = [
   { n: 1000, title: "Repas pour deux",               sub: "valeur 52 €" },
 ];
 export const PLATFORMS = ["Instagram", "Facebook"];
+export const DEFAULT_TIERS = { Instagram: [300, 500, 700, 1000], Facebook: [500, 700, 1000, 1200] };
+/** Paliers d'un réseau (les 4 lots dans l'ordre, seuils configurables). */
+export function tiersFor(platform, cfg) {
+  const ns = (cfg?.tiers && cfg.tiers[platform]) || DEFAULT_TIERS[platform];
+  return TIERS.map((t, i) => ({ ...t, n: ns[i] ?? t.n }));
+}
 const G = "https://graph.facebook.com/v21.0";
 
 export const store = () => getStore("jeu");
@@ -18,7 +24,7 @@ export async function loadState() {
     counts: st.counts || { Instagram: null, Facebook: null, at: null },
     log: st.log || [],                // [{at, Instagram, Facebook}]
     draws: st.draws || {},            // {"Instagram-300": {...}}
-    config: st.config || { igMediaId: "", fbPostId: "", autoPost: true, requireTag: false, enabled: true },
+    config: { igMediaId: "", fbPostId: "", autoPost: true, requireTag: false, enabled: true, tiers: DEFAULT_TIERS, ...(st.config || {}) },
     lastError: st.lastError || null,
   };
 }
@@ -116,13 +122,14 @@ export function randomIndex(n) {
 }
 
 export async function publishWinner(platform, tier, winner, cfg) {
-  const t = TIERS.find(x => x.n === tier);
+  const t = tiersFor(platform, cfg).find(x => x.n === tier);
   const msg = `🎉 Palier ${tier} abonnés atteint sur ${platform} ! Bravo ${winner.name}, tu remportes : ${t.title} (${t.sub}) au Bô Passage. Envoie-nous un message privé pour récupérer ton lot.\n\nMerci à tous les participants — le jeu continue jusqu'à 1000 abonnés, l'équipe de Bô Passage vous attend ! 🥂\n👉 Tirage vérifiable sur https://bopassage.fr/jeu`;
   if (platform === "Facebook") {
     const r = await gpost(`/${cfg.fbPageId}/feed`, { message: msg, link: "https://bopassage.fr/jeu" });
     return r.id;
   } else {
-    const img = `https://bopassage.fr/img/jeu/gagnant-${tier}.jpg`;
+    const idx = tiersFor(platform, cfg).findIndex(x => x.n === tier);
+    const img = `https://bopassage.fr/img/jeu/gagnant-${[300,500,700,1000][idx] || 1000}.jpg`;
     const c = await gpost(`/${cfg.igUserId}/media`, { image_url: img, caption: msg });
     const p = await gpost(`/${cfg.igUserId}/media_publish`, { creation_id: c.id });
     return p.id;
@@ -141,9 +148,9 @@ export async function sync({ force = false } = {}) {
     if (st.log.length > 2000) st.log = st.log.slice(-2000);
     if (st.config.enabled !== false) {
       for (const platform of PLATFORMS) {
-        for (const t of TIERS) {
+        for (const t of tiersFor(platform, st.config)) {
           const key = `${platform}-${t.n}`;
-          if (st.draws[key]) continue;
+          if (st.draws[key] && !st.draws[key].pending) continue;
           if ((counts[platform] ?? 0) < t.n) continue;
           try {
             const parts = await participants(platform, st.config);

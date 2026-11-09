@@ -130,7 +130,7 @@ label.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:8px 0}
     <ol>
       <li><b>Abonne-toi</b> à la page Bô Passage (Instagram et/ou Facebook).</li>
       <li><b>Commente</b> la publication du jeu en <b>taguant un(e) ami(e)</b> — et partage-la pour qu'il/elle puisse gagner aussi.</li>
-      <li>À chaque palier d'abonnés atteint (<b>300 · 500 · 700 · 1000</b>), un <b>tirage au sort automatique</b> a lieu parmi les commentaires, <b>sur chaque réseau</b> : un gagnant Instagram et un gagnant Facebook par palier.</li>
+      <li>À chaque palier d'abonnés atteint (Instagram <b>300 · 500 · 700 · 1000</b>, Facebook <b>500 · 700 · 1000 · 1200</b>), un <b>tirage au sort automatique</b> a lieu parmi les commentaires, <b>sur chaque réseau</b> : un gagnant Instagram et un gagnant Facebook par palier.</li>
       <li>Le tirage est enregistré et <b>rejouable ici</b> ; le gagnant est annoncé sur la page et doit nous écrire en message privé pour récupérer son lot (valable 30 jours, au restaurant, hors boissons sauf lot concerné).</li>
     </ol>
     <p class="muted">Jeu gratuit sans obligation d'achat, réservé aux personnes majeures. Un seul compte par participant. Instagram et Facebook ne sont ni organisateurs ni parrains de ce jeu. Lots non échangeables ni remboursables. L'abus d'alcool est dangereux pour la santé, à consommer avec modération. Organisateur : SAS Le Refuge Gourmand — Bô Passage, 17 Place du Marché, 42300 Roanne.</p>
@@ -145,7 +145,9 @@ label.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:8px 0}
         <button class="btn ghost sm" id="loadposts">Choisir les posts concours</button>
       </div>
       <div id="posts"></div>
-      <label class="chk"><input type="checkbox" id="c-enabled"> Jeu actif (tirages automatiques)</label>
+      <h2 style="margin-top:16px">Paliers (4 seuils, dans l'ordre des lots)</h2>
+      <div class="row"><label style="flex:1">📸 Instagram <input type="text" id="t-ig" placeholder="300,500,700,1000"></label><label style="flex:1">👍 Facebook <input type="text" id="t-fb" placeholder="500,700,1000,1200"></label></div>
+      <label class="chk" style="margin-top:12px"><input type="checkbox" id="c-enabled"> Jeu actif (tirages automatiques)</label>
       <label class="chk"><input type="checkbox" id="c-autoPost"> Publier automatiquement le gagnant sur Instagram + Facebook</label>
       <label class="chk"><input type="checkbox" id="c-requireTag"> Exiger un(e) ami(e) tagué(e) dans le commentaire</label>
       <div class="row"><button class="btn sm" id="saveconf">Enregistrer</button></div>
@@ -179,17 +181,17 @@ function render(){
   $('#fbname').textContent=S.config?.fbPageName||'';
   for(const [p,k] of [['Instagram','ig'],['Facebook','fb']]){
     const n=c[p]; $('#'+k+'-n').textContent=fmt(n);
-    const next=S.tiers.find(t=>t.n>(n||0));
-    $('#'+k+'-bar').style.width=Math.min(100,((n||0)/1000)*100)+'%';
+    const tiers=S.tiers[p]; const maxN=tiers[tiers.length-1].n; const next=tiers.find(t=>t.n>(n||0));
+    $('#'+k+'-bar').style.width=Math.min(100,((n||0)/maxN)*100)+'%';
     $('#'+k+'-next').textContent=next?`Plus que ${fmt(next.n-(n||0))} abonnés avant le palier ${next.n} !`:'Tous les paliers sont atteints 🎉';
-    $('#'+k+'-tiers').innerHTML=S.tiers.map(t=>{
+    $('#'+k+'-tiers').innerHTML=tiers.map(t=>{
       const d=S.draws[p+'-'+t.n]; const ok=(n||0)>=t.n; const won=d&&!d.pending;
       const st=won?'Gagnant : '+d.winner.name:(d&&d.pending?'Tirage en attente':ok?'Palier atteint':'À venir');
       return `<div class="tier ${ok?'ok':''} ${won?'won':''}"><div class="num">${t.n}</div><div class="p">${t.title}<small>${t.sub}</small></div><div class="st" ${won?`data-key="${p}-${t.n}" title="Rejouer le tirage"`:''}>${st}</div></div>`;
     }).join('');
   }
   const draws=Object.values(S.draws).filter(d=>!d.pending).sort((a,b)=>b.at.localeCompare(a.at));
-  $('#hist').innerHTML=draws.map(d=>`<li><span>${ico(d.platform)} <b>${d.winner.name}</b> — ${d.prize}</span><span><button class="btn ghost sm" data-key="${d.platform}-${d.tier}">▶ Rejouer</button></span></li>`).join('')||'<li class="muted">Aucun tirage pour l\'instant — le premier aura lieu à 300 abonnés.</li>';
+  $('#hist').innerHTML=draws.map(d=>`<li><span>${ico(d.platform)} <b>${d.winner.name}</b> — ${d.prize}</span><span><button class="btn ghost sm" data-key="${d.platform}-${d.tier}">▶ Rejouer</button></span></li>`).join('')||'<li class="muted">Aucun tirage pour l\'instant — le premier aura lieu au premier palier atteint.</li>';
   lastDraw=draws[0]||null;
   $('#replay').disabled=!lastDraw;
   if(lastDraw&&!spinning){ wheelNames=lastDraw.participants; $('#prize').innerHTML=`${lastDraw.platform} · Palier ${lastDraw.tier} abonnés<b>${lastDraw.prize} · ${lastDraw.sub}</b>`; }
@@ -198,7 +200,7 @@ function render(){
   if(c.at) $('#upd').textContent='Compteurs mis à jour le '+new Date(c.at).toLocaleString('fr-FR')+' · actualisation automatique toutes les heures';
   document.querySelectorAll('[data-key]').forEach(el=>el.onclick=()=>replay(S.draws[el.dataset.key]));
   // admin
-  if(S.config){ $('#c-enabled').checked=S.config.enabled!==false; $('#c-autoPost').checked=S.config.autoPost!==false; $('#c-requireTag').checked=!!S.config.requireTag; }
+  if(S.config){ if(S.config.tiers){$('#t-ig').value=S.config.tiers.Instagram.join(',');$('#t-fb').value=S.config.tiers.Facebook.join(',');} $('#c-enabled').checked=S.config.enabled!==false; $('#c-autoPost').checked=S.config.autoPost!==false; $('#c-requireTag').checked=!!S.config.requireTag; }
   $('#resetkey').innerHTML=Object.keys(S.draws).map(k=>`<option value="${k}">${k} ${S.draws[k].pending?'(en attente)':'— '+S.draws[k].winner.name}</option>`).join('')||'<option>—</option>';
 }
 
@@ -255,7 +257,7 @@ $('#loadposts').onclick=async()=>{$('#posts').innerHTML='<div class="muted">Char
   $('#posts').innerHTML=h+'<div class="row"><button class="btn sm" id="saveposts">Valider ces posts</button></div>';
   $('#saveposts').onclick=async()=>{const ig=document.querySelector('input[name=Instagram]:checked')?.value||'',fb=document.querySelector('input[name=Facebook]:checked')?.value||'';const r=await post({action:'config',config:{igMediaId:ig,fbPostId:fb}});S=r;render();toast('Posts enregistrés');};
  }catch(e){$('#posts').innerHTML='<div class="err">'+e.message+'</div>'}};
-$('#saveconf').onclick=async()=>{try{const r=await post({action:'config',config:{enabled:$('#c-enabled').checked,autoPost:$('#c-autoPost').checked,requireTag:$('#c-requireTag').checked}});S=r;render();toast('Enregistré');}catch(e){$('#adm-err').textContent=e.message}};
+$('#saveconf').onclick=async()=>{try{const r=await post({action:'config',config:{enabled:$('#c-enabled').checked,autoPost:$('#c-autoPost').checked,requireTag:$('#c-requireTag').checked,tiers:{Instagram:$('#t-ig').value.split(',').map(Number).filter(Boolean),Facebook:$('#t-fb').value.split(',').map(Number).filter(Boolean)}}});S=r;render();toast('Enregistré');}catch(e){$('#adm-err').textContent=e.message}};
 $('#resetdraw').onclick=async()=>{const k=$('#resetkey').value;if(!k||k==='—')return;try{const r=await post({action:'reset-draw',key:k});S=r;render();toast('Tirage annulé — il sera refait à la prochaine synchro');}catch(e){$('#adm-err').textContent=e.message}};
 
 load(); setInterval(load,5*60*1000);

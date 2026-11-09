@@ -1,10 +1,10 @@
-import { loadState, saveState, sync, resolveIds, recentPosts, TIERS, PLATFORMS } from "./_lib.mjs";
+import { loadState, saveState, sync, resolveIds, recentPosts, tiersFor, PLATFORMS } from "./_lib.mjs";
 const J = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
 const pub = (st) => ({
-  tiers: TIERS, platforms: PLATFORMS, counts: st.counts, lastError: st.lastError,
+  tiers: { Instagram: tiersFor("Instagram", st.config), Facebook: tiersFor("Facebook", st.config) }, platforms: PLATFORMS, counts: st.counts, lastError: st.lastError,
   log: st.log.slice(-200),
   draws: Object.fromEntries(Object.entries(st.draws).map(([k, d]) => [k, d.pending ? { pending: true, reason: d.reason } : { ...d, participants: d.participants, winner: { name: d.winner.name } }])),
-  config: { autoPost: st.config.autoPost, requireTag: st.config.requireTag, enabled: st.config.enabled, igMediaId: st.config.igMediaId || "", fbPostId: st.config.fbPostId || "", igUsername: st.config.igUsername, fbPageName: st.config.fbPageName },
+  config: { autoPost: st.config.autoPost, requireTag: st.config.requireTag, enabled: st.config.enabled, igMediaId: st.config.igMediaId || "", fbPostId: st.config.fbPostId || "", igUsername: st.config.igUsername, fbPageName: st.config.fbPageName, tiers: st.config.tiers },
 });
 export default async (req) => {
   if (req.method === "GET") return J(pub(await loadState()));
