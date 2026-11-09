@@ -7,6 +7,9 @@ const pub = (st) => ({
   config: { autoPost: st.config.autoPost, requireTag: st.config.requireTag, enabled: st.config.enabled, igMediaId: st.config.igMediaId || "", fbPostId: st.config.fbPostId || "", igUsername: st.config.igUsername, fbPageName: st.config.fbPageName, tiers: st.config.tiers },
 });
 export default async (req) => {
+  try { return await handle(req); } catch (e) { return J({ error: e.message }, 500); }
+};
+async function handle(req) {
   if (req.method === "GET") return J(pub(await loadState()));
   if (req.method !== "POST") return J({ error: "méthode" }, 405);
   const body = await req.json().catch(() => ({}));
@@ -24,5 +27,5 @@ export default async (req) => {
     return J({ ok: true, ids, ...pub(st) });
   }
   if (body.action === "setCounts") { st.counts = { ...st.counts, ...body.counts, at: new Date().toISOString() }; await saveState(st); }
-  return J({ ok: true, ...pub(st), fullConfig: st.config });
-};
+  return J({ ok: true, ...pub(st) });
+}

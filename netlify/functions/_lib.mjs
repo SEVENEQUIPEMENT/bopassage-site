@@ -35,18 +35,18 @@ export function token() {
   if (!t) throw new Error("META_PAGE_TOKEN manquant");
   return t;
 }
-export async function gget(path, params = {}) {
+export async function gget(path, params = {}, tok) {
   const u = new URL(G + path);
   Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, v));
-  u.searchParams.set("access_token", token());
+  u.searchParams.set("access_token", tok || token());
   const r = await fetch(u);
   const j = await r.json();
   if (!r.ok || j.error) throw new Error("Graph " + path + " : " + (j.error?.message || r.status));
   return j;
 }
-export async function gpost(path, params = {}) {
+export async function gpost(path, params = {}, tok) {
   const u = new URL(G + path);
-  const body = new URLSearchParams({ ...params, access_token: token() });
+  const body = new URLSearchParams({ ...params, access_token: tok || token() });
   const r = await fetch(u, { method: "POST", body });
   const j = await r.json();
   if (!r.ok || j.error) throw new Error("Graph POST " + path + " : " + (j.error?.message || r.status));
@@ -55,7 +55,8 @@ export async function gpost(path, params = {}) {
 
 /** Résout automatiquement l'ID de la page FB et du compte IG à partir du token (mis en cache dans la config). */
 export async function resolveIds(cfg) {
-  if (cfg.fbPageId && cfg.igUserId) return cfg;
+  if (cfg.fbPageId && cfg.igUserId && cfg.fbPageToken) return cfg;
+  if (cfg.fbPageId && cfg.igUserId) { const r = await gget(`/${cfg.fbPageId}`, { fields: "access_token" }); cfg.fbPageToken = r.access_token; return cfg; }
   const pages = await gget(`/me/accounts`, { fields: "id,name,instagram_business_account{id,username}", limit: 50 });
   let page = (pages.data || []).find(p => /b[oô]\s*passage/i.test(p.name)) || (pages.data || [])[0];
   if (!page) {
@@ -72,17 +73,18 @@ export async function resolveIds(cfg) {
   cfg.igUserId = page.instagram_business_account?.id || "";
   cfg.igUsername = page.instagram_business_account?.username || "";
   if (!cfg.igUserId) throw new Error("Aucun compte Instagram professionnel relié à la page " + page.name);
+  const r = await gget(`/${cfg.fbPageId}`, { fields: "access_token" }); cfg.fbPageToken = r.access_token;
   return cfg;
 }
 export async function fetchCounts(cfg) {
   const ig = await gget(`/${cfg.igUserId}`, { fields: "followers_count,username" });
-  const fb = await gget(`/${cfg.fbPageId}`, { fields: "followers_count,fan_count,name" });
+  const fb = await gget(`/${cfg.fbPageId}`, { fields: "followers_count,fan_count,name" }, cfg.fbPageToken);
   return { Instagram: ig.followers_count, Facebook: fb.followers_count ?? fb.fan_count, igUser: ig.username, fbName: fb.name, at: new Date().toISOString() };
 }
 /** Derniers posts de chaque réseau, pour choisir le post concours. */
 export async function recentPosts(cfg) {
   const ig = await gget(`/${cfg.igUserId}/media`, { fields: "id,caption,permalink,timestamp,comments_count", limit: 15 });
-  const fb = await gget(`/${cfg.fbPageId}/posts`, { fields: "id,message,permalink_url,created_time,comments.summary(true).limit(0)", limit: 15 });
+  const fb = await gget(`/${cfg.fbPageId}/posts`, { fields: "id,message,permalink_url,created_time,comments.summary(true).limit(0)", limit: 15 }, cfg.fbPageToken);
   return {
     Instagram: (ig.data || []).map(m => ({ id: m.id, text: (m.caption || "").slice(0, 120), url: m.permalink, at: m.timestamp, comments: m.comments_count })),
     Facebook: (fb.data || []).map(m => ({ id: m.id, text: (m.message || "").slice(0, 120), url: m.permalink_url, at: m.created_time, comments: m.comments?.summary?.total_count })),
@@ -108,7 +110,7 @@ export async function participants(platform, cfg) {
     list = raw.map(c => ({ id: c.username, name: "@" + c.username, text: c.text || "" }));
   } else {
     if (!cfg.fbPostId) throw new Error("Post concours Facebook non défini");
-    const raw = await paginate(`${G}/${cfg.fbPostId}/comments?fields=from{name,id},message,created_time&limit=100&filter=stream&access_token=${t}`);
+    const raw = await paginate(`${G}/${cfg.fbPostId}/comments?fields=from{name,id},message,created_time&limit=100&filter=stream&access_token=${cfg.fbPageToken}`);
     list = raw.filter(c => c.from && c.from.id !== cfg.fbPageId).map(c => ({ id: c.from.id, name: c.from.name, text: c.message || "" }));
   }
   if (cfg.requireTag) list = list.filter(p => /@/.test(p.text) || /\[\d+:/.test(p.text));
@@ -125,7 +127,7 @@ export async function publishWinner(platform, tier, winner, cfg) {
   const t = tiersFor(platform, cfg).find(x => x.n === tier);
   const msg = `🎉 Palier ${tier} abonnés atteint sur ${platform} ! Bravo ${winner.name}, tu remportes : ${t.title} (${t.sub}) au Bô Passage. Envoie-nous un message privé pour récupérer ton lot.\n\nMerci à tous les participants — le jeu continue jusqu'à 1000 abonnés, l'équipe de Bô Passage vous attend ! 🥂\n👉 Tirage vérifiable sur https://bopassage.fr/jeu`;
   if (platform === "Facebook") {
-    const r = await gpost(`/${cfg.fbPageId}/feed`, { message: msg, link: "https://bopassage.fr/jeu" });
+    const r = await gpost(`/${cfg.fbPageId}/feed`, { message: msg, link: "https://bopassage.fr/jeu" }, cfg.fbPageToken);
     return r.id;
   } else {
     const idx = tiersFor(platform, cfg).findIndex(x => x.n === tier);
@@ -175,7 +177,7 @@ export async function sync({ force = false } = {}) {
 /** Publie le post de lancement sur FB et IG et l'enregistre comme post concours. */
 export async function publishLaunch(cfg, texts) {
   const out = {};
-  const fb = await gpost(`/${cfg.fbPageId}/photos`, { url: "https://bopassage.fr/img/jeu/lancement-carre.jpg", message: texts.Facebook });
+  const fb = await gpost(`/${cfg.fbPageId}/photos`, { url: "https://bopassage.fr/img/jeu/lancement-carre.jpg", message: texts.Facebook }, cfg.fbPageToken);
   out.fbPostId = fb.post_id || fb.id;
   const c = await gpost(`/${cfg.igUserId}/media`, { image_url: "https://bopassage.fr/img/jeu/lancement-carre.jpg", caption: texts.Instagram });
   const p = await gpost(`/${cfg.igUserId}/media_publish`, { creation_id: c.id });
