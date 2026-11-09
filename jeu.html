@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grand jeu followers — Bô Passage, Roanne</title>
+<meta name="description" content="Grand jeu followers Bô Passage : à chaque palier d'abonnés atteint sur Instagram et Facebook, un tirage au sort automatique et vérifiable. Apéritif, planche, rosé pétillant, repas pour deux à gagner.">
+<link rel="canonical" href="https://bopassage.fr/jeu">
+<meta property="og:title" content="Grand jeu followers — Bô Passage">
+<meta property="og:description" content="Suivez-nous, commentez, taguez un ami : à 300, 500, 700 et 1000 abonnés, un tirage au sort en direct sur bopassage.fr/jeu.">
+<meta property="og:image" content="https://bopassage.fr/img/jeu/gagnant-1000.jpg">
+<meta property="og:url" content="https://bopassage.fr/jeu">
+<link rel="icon" href="img/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bleu:#12203C;--bleu2:#1B2F55;--or:#D2B06B;--or2:#F0D89A;--ivoire:#FBF6EC}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bleu);color:var(--ivoire);font-family:Gelasio,Georgia,serif}
+body{background:radial-gradient(1200px 600px at 50% -10%,#1E3461 0%,var(--bleu) 60%)}
+a{color:var(--or)}
+header{text-align:center;padding:22px 16px 6px}
+header img{width:150px}
+header h1{font-style:italic;font-weight:600;font-size:clamp(28px,6vw,44px);color:var(--or);margin:8px 0 2px}
+header .sub{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--or2);opacity:.85}
+.rule{display:flex;align-items:center;gap:10px;justify-content:center;margin:12px auto 0;max-width:520px;color:var(--or)}
+.rule:before,.rule:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--or),transparent)}
+main{max-width:1100px;margin:0 auto;padding:10px 16px 40px;display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:900px){main{grid-template-columns:1fr 1fr}.wide{grid-column:1/-1}}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(210,176,107,.35);border-radius:14px;padding:18px;position:relative}
+.card:before{content:"";position:absolute;inset:5px;border:1px solid rgba(210,176,107,.18);border-radius:10px;pointer-events:none}
+h2{margin:0 0 12px;font-size:14px;letter-spacing:2.5px;text-transform:uppercase;color:var(--or);font-weight:600}
+.net{display:flex;align-items:baseline;gap:12px;margin:4px 0 6px}
+.net .n{font-size:clamp(40px,8vw,64px);font-weight:700;color:var(--or);line-height:1}
+.net .l{font-size:14px;opacity:.8}
+.bar{height:12px;border-radius:999px;background:rgba(0,0,0,.3);overflow:hidden;border:1px solid rgba(210,176,107,.3);margin:8px 0 4px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--or),var(--or2));width:0;transition:width 1s ease}
+.next{font-size:13px;opacity:.8}
+.tiers{display:grid;gap:8px;margin-top:12px}
+.tier{display:grid;grid-template-columns:60px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;border:1px solid rgba(210,176,107,.25);background:rgba(0,0,0,.18)}
+.tier .num{font-weight:700;color:var(--or);font-size:18px;text-align:center}
+.tier .p{font-size:14px;line-height:1.25}.tier .p small{display:block;opacity:.7;font-size:12px}
+.tier .st{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.2);opacity:.75;white-space:nowrap}
+.tier.ok{border-color:var(--or);background:linear-gradient(90deg,rgba(210,176,107,.18),rgba(210,176,107,.05))}
+.tier.won .st{background:var(--or);color:var(--bleu);border-color:var(--or);opacity:1;font-weight:700;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--or);color:var(--bleu);border:0;border-radius:10px;padding:11px 16px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--or);border:1px solid var(--or)}
+.btn.sm{padding:7px 11px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.stage{display:flex;flex-direction:column;align-items:center;text-align:center}
+.prize{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--or2);min-height:20px}
+.prize b{display:block;font-size:20px;letter-spacing:0;text-transform:none;color:var(--or);font-style:italic;margin-top:4px}
+.wheelwrap{position:relative;width:min(78vw,420px);height:min(78vw,420px);margin:14px 0 8px}
+canvas{width:100%;height:100%;display:block;border-radius:50%;box-shadow:0 0 0 6px var(--bleu),0 0 0 8px var(--or),0 20px 60px rgba(0,0,0,.5)}
+.pointer{position:absolute;top:-14px;left:50%;transform:translateX(-50%);border-left:16px solid transparent;border-right:16px solid transparent;border-top:30px solid var(--or);filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));z-index:2}
+.hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:var(--bleu);border:3px solid var(--or);display:flex;align-items:center;justify-content:center;color:var(--or);font-style:italic;font-weight:600;font-size:14px;z-index:2}
+.winner{margin-top:12px;min-height:80px}
+.winner .lbl{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--or2);opacity:.8}
+.winner .name{font-size:clamp(28px,6vw,52px);font-weight:700;color:var(--or);line-height:1.1;margin-top:4px;text-shadow:0 2px 20px rgba(210,176,107,.35)}
+.winner .name.pop{animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+.hist li{padding:8px 10px;border-bottom:1px solid rgba(210,176,107,.15);font-size:14px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.hist ul{list-style:none;margin:0;padding:0}
+.regl{font-size:14px;line-height:1.6}
+.regl ol{padding-left:20px}
+footer{text-align:center;font-size:12px;opacity:.65;padding:0 16px 30px;line-height:1.6}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--or);color:var(--bleu);padding:10px 16px;border-radius:999px;font-weight:700;opacity:0;transition:.3s;pointer-events:none;z-index:60}
+.toast.show{opacity:1}
+body.live header,body.live .card:not(.stage),body.live footer,body.live .hist{display:none}
+body.live main{grid-template-columns:1fr;max-width:760px;padding-top:30px}
+body.live .stage{border:0;background:transparent}
+.admin{display:none}
+body.adminmode .admin{display:block}
+input[type=password],input[type=text],select{background:rgba(0,0,0,.25);border:1px solid rgba(210,176,107,.4);color:var(--ivoire);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:15px;width:100%}
+label.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:8px 0}
+.postlist{display:grid;gap:6px;max-height:260px;overflow:auto;margin:6px 0}
+.post{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;font-size:13px;padding:6px 8px;border:1px solid rgba(210,176,107,.2);border-radius:8px}
+.post.sel{border-color:var(--or);background:rgba(210,176,107,.12)}
+.muted{opacity:.7;font-size:13px}
+.err{color:#f8b4b4;font-size:13px}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<header>
+  <a href="/"><img src="img/logo.png" alt="Bô Passage"></a>
+  <h1>Grand jeu followers</h1>
+  <div class="sub">Tirage au sort automatique · vérifiable en direct</div>
+  <div class="rule"><span>◆</span></div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>📸 Instagram <span class="muted" id="igname"></span></h2>
+    <div class="net"><div class="n" id="ig-n">—</div><div class="l">abonnés</div></div>
+    <div class="bar"><i id="ig-bar"></i></div>
+    <div class="next" id="ig-next"></div>
+    <div class="tiers" id="ig-tiers"></div>
+    <div class="row"><a class="btn sm" href="https://www.instagram.com/bo_passage_roanne/" target="_blank" rel="noopener">Suivre sur Instagram</a></div>
+  </section>
+
+  <section class="card">
+    <h2>👍 Facebook <span class="muted" id="fbname"></span></h2>
+    <div class="net"><div class="n" id="fb-n">—</div><div class="l">abonnés</div></div>
+    <div class="bar"><i id="fb-bar"></i></div>
+    <div class="next" id="fb-next"></div>
+    <div class="tiers" id="fb-tiers"></div>
+    <div class="row"><a class="btn sm" href="https://www.facebook.com/bo_passage_roanne" target="_blank" rel="noopener">Suivre sur Facebook</a></div>
+  </section>
+
+  <section class="card stage wide">
+    <h2>Le tirage</h2>
+    <div class="prize" id="prize">En attente du prochain palier…</div>
+    <div class="wheelwrap">
+      <div class="pointer"></div>
+      <canvas id="wheel" width="900" height="900"></canvas>
+      <div class="hub">Bô<br>Passage</div>
+    </div>
+    <div class="row">
+      <button class="btn" id="replay" disabled>▶ Rejouer le dernier tirage</button>
+      <button class="btn ghost" id="live">Mode direct</button>
+    </div>
+    <div class="winner"><div class="lbl" id="wlbl"></div><div class="name" id="wname"></div></div>
+    <div class="hist" style="width:100%;text-align:left;margin-top:10px"><h2>Gagnants</h2><ul id="hist"></ul></div>
+    <div class="muted" id="upd" style="margin-top:8px"></div>
+  </section>
+
+  <section class="card wide regl">
+    <h2>Comment participer</h2>
+    <ol>
+      <li><b>Abonne-toi</b> à la page Bô Passage (Instagram et/ou Facebook).</li>
+      <li><b>Commente</b> la publication du jeu en <b>taguant un(e) ami(e)</b> — et partage-la pour qu'il/elle puisse gagner aussi.</li>
+      <li>À chaque palier d'abonnés atteint (<b>300 · 500 · 700 · 1000</b>), un <b>tirage au sort automatique</b> a lieu parmi les commentaires, <b>sur chaque réseau</b> : un gagnant Instagram et un gagnant Facebook par palier.</li>
+      <li>Le tirage est enregistré et <b>rejouable ici</b> ; le gagnant est annoncé sur la page et doit nous écrire en message privé pour récupérer son lot (valable 30 jours, au restaurant, hors boissons sauf lot concerné).</li>
+    </ol>
+    <p class="muted">Jeu gratuit sans obligation d'achat, réservé aux personnes majeures. Un seul compte par participant. Instagram et Facebook ne sont ni organisateurs ni parrains de ce jeu. Lots non échangeables ni remboursables. L'abus d'alcool est dangereux pour la santé, à consommer avec modération. Organisateur : SAS Le Refuge Gourmand — Bô Passage, 17 Place du Marché, 42300 Roanne.</p>
+  </section>
+
+  <section class="card wide admin" id="adminbox">
+    <h2>Administration</h2>
+    <div id="adm-login"><label>Mot de passe admin</label><input type="password" id="secret"><div class="row"><button class="btn sm" id="login">Entrer</button></div></div>
+    <div id="adm-panel" style="display:none">
+      <div class="row">
+        <button class="btn sm" id="sync">🔄 Synchroniser maintenant</button>
+        <button class="btn ghost sm" id="loadposts">Choisir les posts concours</button>
+      </div>
+      <div id="posts"></div>
+      <label class="chk"><input type="checkbox" id="c-enabled"> Jeu actif (tirages automatiques)</label>
+      <label class="chk"><input type="checkbox" id="c-autoPost"> Publier automatiquement le gagnant sur Instagram + Facebook</label>
+      <label class="chk"><input type="checkbox" id="c-requireTag"> Exiger un(e) ami(e) tagué(e) dans le commentaire</label>
+      <div class="row"><button class="btn sm" id="saveconf">Enregistrer</button></div>
+      <h2 style="margin-top:16px">Annuler un tirage</h2>
+      <div class="row"><select id="resetkey" style="max-width:320px"></select><button class="btn ghost sm" id="resetdraw">Annuler et retirer</button></div>
+      <div class="err" id="adm-err"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>◆</span> Bô Passage · 17 Place du Marché, 42300 Roanne · 04 51 24 99 89 · <a href="/">bopassage.fr</a> <span>◆</span>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+let S=null, lastDraw=null, spinning=false, angle=0, wheelNames=[];
+const fmt=n=>n==null?'—':n.toLocaleString('fr-FR');
+const ico=p=>p==='Instagram'?'📸':'👍';
+
+async function load(){
+  try{
+    const r=await fetch('/api/jeu',{cache:'no-store'}); S=await r.json();
+  }catch(e){ $('#upd').textContent='Données indisponibles pour le moment.'; return; }
+  render();
+}
+function render(){
+  const c=S.counts||{};
+  $('#igname').textContent=S.config?.igUsername?'@'+S.config.igUsername:'';
+  $('#fbname').textContent=S.config?.fbPageName||'';
+  for(const [p,k] of [['Instagram','ig'],['Facebook','fb']]){
+    const n=c[p]; $('#'+k+'-n').textContent=fmt(n);
+    const next=S.tiers.find(t=>t.n>(n||0));
+    $('#'+k+'-bar').style.width=Math.min(100,((n||0)/1000)*100)+'%';
+    $('#'+k+'-next').textContent=next?`Plus que ${fmt(next.n-(n||0))} abonnés avant le palier ${next.n} !`:'Tous les paliers sont atteints 🎉';
+    $('#'+k+'-tiers').innerHTML=S.tiers.map(t=>{
+      const d=S.draws[p+'-'+t.n]; const ok=(n||0)>=t.n; const won=d&&!d.pending;
+      const st=won?'Gagnant : '+d.winner.name:(d&&d.pending?'Tirage en attente':ok?'Palier atteint':'À venir');
+      return `<div class="tier ${ok?'ok':''} ${won?'won':''}"><div class="num">${t.n}</div><div class="p">${t.title}<small>${t.sub}</small></div><div class="st" ${won?`data-key="${p}-${t.n}" title="Rejouer le tirage"`:''}>${st}</div></div>`;
+    }).join('');
+  }
+  const draws=Object.values(S.draws).filter(d=>!d.pending).sort((a,b)=>b.at.localeCompare(a.at));
+  $('#hist').innerHTML=draws.map(d=>`<li><span>${ico(d.platform)} <b>${d.winner.name}</b> — ${d.prize}</span><span><button class="btn ghost sm" data-key="${d.platform}-${d.tier}">▶ Rejouer</button></span></li>`).join('')||'<li class="muted">Aucun tirage pour l\'instant — le premier aura lieu à 300 abonnés.</li>';
+  lastDraw=draws[0]||null;
+  $('#replay').disabled=!lastDraw;
+  if(lastDraw&&!spinning){ wheelNames=lastDraw.participants; $('#prize').innerHTML=`${lastDraw.platform} · Palier ${lastDraw.tier} abonnés<b>${lastDraw.prize} · ${lastDraw.sub}</b>`; }
+  else if(!lastDraw){ wheelNames=['Toi ?','Un(e) ami(e) ?','Toi ?','Un(e) ami(e) ?','Toi ?','Un(e) ami(e) ?']; }
+  draw();
+  if(c.at) $('#upd').textContent='Compteurs mis à jour le '+new Date(c.at).toLocaleString('fr-FR')+' · actualisation automatique toutes les heures';
+  document.querySelectorAll('[data-key]').forEach(el=>el.onclick=()=>replay(S.draws[el.dataset.key]));
+  // admin
+  if(S.config){ $('#c-enabled').checked=S.config.enabled!==false; $('#c-autoPost').checked=S.config.autoPost!==false; $('#c-requireTag').checked=!!S.config.requireTag; }
+  $('#resetkey').innerHTML=Object.keys(S.draws).map(k=>`<option value="${k}">${k} ${S.draws[k].pending?'(en attente)':'— '+S.draws[k].winner.name}</option>`).join('')||'<option>—</option>';
+}
+
+/* roue */
+const cv=$('#wheel'),ctx=cv.getContext('2d');
+function draw(){
+  const a=wheelNames;const n=Math.max(a.length,1);const R=450,cx=450,cy=450;
+  ctx.clearRect(0,0,900,900);
+  const cols=['#D2B06B','#1B2F55','#F0D89A','#24407A'];
+  for(let i=0;i<n;i++){
+    const s=angle+i*2*Math.PI/n,e=s+2*Math.PI/n;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,s,e);ctx.closePath();
+    ctx.fillStyle=cols[i%cols.length];if(n%cols.length===1&&i===n-1)ctx.fillStyle=cols[1];
+    ctx.fill();ctx.strokeStyle='rgba(18,32,60,.6)';ctx.lineWidth=2;ctx.stroke();
+    if(n<=70){
+      ctx.save();ctx.translate(cx,cy);ctx.rotate(s+(e-s)/2);ctx.textAlign='right';ctx.textBaseline='middle';
+      ctx.fillStyle=(i%cols.length===0||i%cols.length===2)?'#12203C':'#FBF6EC';
+      const fs=n<=8?34:n<=16?26:n<=30?18:12;ctx.font=`600 ${fs}px Gelasio, Georgia, serif`;
+      let t=a[i]||'';if(t.length>22)t=t.slice(0,21)+'…';
+      ctx.fillText(t,R-26,0);ctx.restore();
+    }
+  }
+}
+function replay(d){
+  if(!d||d.pending||spinning)return;
+  wheelNames=d.participants; const n=wheelNames.length, win=d.index, seg=2*Math.PI/n;
+  $('#prize').innerHTML=`${d.platform} · Palier ${d.tier} abonnés<b>${d.prize} · ${d.sub}</b>`;
+  $('.stage').scrollIntoView({behavior:'smooth',block:'center'});
+  const target=-Math.PI/2-(win*seg+seg/2); const turns=d.turns||7;
+  const start=angle%(2*Math.PI); let end=target-turns*2*Math.PI; while(end>start)end-=2*Math.PI;
+  const dur=7000,t0=performance.now();
+  spinning=true;$('#wname').textContent='';$('#wlbl').textContent='Suspense…';$('#wname').classList.remove('pop');
+  (function step(now){const p=Math.min(1,(now-t0)/dur),ease=1-Math.pow(1-p,4);angle=start+(end-start)*ease;draw();if(p<1)requestAnimationFrame(step);else{spinning=false;$('#wlbl').textContent=`Gagnant ${d.platform} · ${d.prize}`;const el=$('#wname');el.textContent=d.winner.name;void el.offsetWidth;el.classList.add('pop');confetti();}})(t0);
+}
+$('#replay').onclick=()=>replay(lastDraw);
+function confetti(){
+  const c=$('#confetti'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const P=[];for(let i=0;i<220;i++)P.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,r:4+Math.random()*6,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,a:Math.random()*6,va:(Math.random()-.5)*.3,col:['#D2B06B','#F0D89A','#FBF6EC','#fff'][i%4]});
+  const t0=performance.now();
+  (function f(now){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a+=p.va;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.col;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(now-t0<4500)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})(t0);
+}
+$('#live').onclick=()=>{document.body.classList.toggle('live');$('#live').textContent=document.body.classList.contains('live')?'Quitter le direct':'Mode direct';try{if(document.body.classList.contains('live')&&!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+
+/* admin */
+let SECRET=sessionStorage.getItem('bp-admin')||'';
+async function post(body){const r=await fetch('/api/jeu',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({secret:SECRET,...body})});const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j;}
+function adminUI(){ if(location.hash==='#admin'){document.body.classList.add('adminmode'); if(SECRET){$('#adm-login').style.display='none';$('#adm-panel').style.display='block';}} }
+window.addEventListener('hashchange',adminUI);adminUI();
+$('#login').onclick=async()=>{SECRET=$('#secret').value;try{await post({action:'config',config:{}});sessionStorage.setItem('bp-admin',SECRET);$('#adm-login').style.display='none';$('#adm-panel').style.display='block';toast('Connecté');}catch(e){$('#adm-err').textContent='Mot de passe refusé';}};
+$('#sync').onclick=async()=>{$('#sync').disabled=true;try{const j=await post({action:'sync'});S=j;render();toast(j.lastError?'Erreur : '+j.lastError.message:'Synchronisé');if(j.lastError)$('#adm-err').textContent=j.lastError.message;else $('#adm-err').textContent='';}catch(e){$('#adm-err').textContent=e.message}$('#sync').disabled=false;};
+$('#loadposts').onclick=async()=>{$('#posts').innerHTML='<div class="muted">Chargement…</div>';try{const j=await post({action:'posts'});let h='';for(const p of ['Instagram','Facebook']){const cur=p==='Instagram'?S.config.igMediaId:S.config.fbPostId;h+=`<h2 style="margin-top:12px">${ico(p)} Post concours ${p}</h2><div class="postlist">`+j.posts[p].map(m=>`<div class="post ${m.id===cur?'sel':''}"><input type="radio" name="${p}" value="${m.id}" ${m.id===cur?'checked':''}><div>${(m.text||'(sans texte)').replace(/</g,'&lt;')}<br><span class="muted">${new Date(m.at).toLocaleDateString('fr-FR')} · ${m.comments??'?'} commentaires · <a href="${m.url}" target="_blank" rel="noopener">voir</a></span></div></div>`).join('')+'</div>';}
+  $('#posts').innerHTML=h+'<div class="row"><button class="btn sm" id="saveposts">Valider ces posts</button></div>';
+  $('#saveposts').onclick=async()=>{const ig=document.querySelector('input[name=Instagram]:checked')?.value||'',fb=document.querySelector('input[name=Facebook]:checked')?.value||'';const r=await post({action:'config',config:{igMediaId:ig,fbPostId:fb}});S=r;render();toast('Posts enregistrés');};
+ }catch(e){$('#posts').innerHTML='<div class="err">'+e.message+'</div>'}};
+$('#saveconf').onclick=async()=>{try{const r=await post({action:'config',config:{enabled:$('#c-enabled').checked,autoPost:$('#c-autoPost').checked,requireTag:$('#c-requireTag').checked}});S=r;render();toast('Enregistré');}catch(e){$('#adm-err').textContent=e.message}};
+$('#resetdraw').onclick=async()=>{const k=$('#resetkey').value;if(!k||k==='—')return;try{const r=await post({action:'reset-draw',key:k});S=r;render();toast('Tirage annulé — il sera refait à la prochaine synchro');}catch(e){$('#adm-err').textContent=e.message}};
+
+load(); setInterval(load,5*60*1000);
+</script>
+</body>
+</html>

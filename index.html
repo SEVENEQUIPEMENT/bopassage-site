@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bô Passage — Bar · Tapas · Restaurant, Place du Marché, Roanne</title>
+<meta name="description" content="Bô Passage, bar-tapas-restaurant sous les arcades de la place du Marché à Roanne. Cuisine marocaine traditionnelle, cocktails maison, happy hour tous les soirs, DJ set le jeudi, brunch le dimanche. Privatisation possible.">
+<meta property="og:title" content="Bô Passage — Bar · Tapas · Restaurant · Roanne">
+<meta property="og:description" content="Cuisine marocaine, cocktails maison et soirées sous les arcades de la place du Marché. 17 place du Marché, 42300 Roanne.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.bo-passage.fr/">
+<meta property="og:image" content="https://www.bo-passage.fr/img/salle-arcades.jpg">
+<meta property="og:locale" content="fr_FR">
+<link rel="canonical" href="https://www.bo-passage.fr/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%2312203C'/%3E%3Cpath d='M14 46V26a9 9 0 0 1 18 0v20M32 46V26a9 9 0 0 1 18 0v20' fill='none' stroke='%23D2B06B' stroke-width='2.5'/%3E%3Cpath d='M32 10l4 4-4 4-4-4z' fill='%23D2B06B'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarOrPub",
+  "name": "Bô Passage",
+  "alternateName": "Bô Passage — Bar · Tapas · Restaurant",
+  "image": "https://www.bo-passage.fr/img/salle-arcades.jpg",
+  "url": "https://www.bo-passage.fr/",
+  "telephone": "+33451249989",
+  "email": "contact@bopassage.fr",
+  "servesCuisine": ["Marocaine", "Tapas", "Cocktails"],
+  "priceRange": "€€",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "17 Place du Marché",
+    "postalCode": "42300",
+    "addressLocality": "Roanne",
+    "addressCountry": "FR"
+  },
+  "geo": {"@type": "GeoCoordinates", "latitude": 46.0362, "longitude": 4.0742},
+  "sameAs": ["https://www.instagram.com/bo_passage_roanne/"],
+  "openingHoursSpecification": [
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday"],"opens":"09:00","closes":"22:30"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Thursday","Friday","Saturday"],"opens":"09:00","closes":"01:00"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"09:00","closes":"16:00"}
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --bleu:#12203C; --bleu-2:#0D1830; --bleu-3:#1A2C50;
+    --or:#D2B06B; --or-2:#B8954F; --or-soft:rgba(210,176,107,.35);
+    --ivoire:#FBF4E9; --ivoire-2:#F3EADA; --brun:#2D261D; --brun-2:#5A4E3C;
+    --blanc:#FFFDF8;
+    --serif:'Gelasio', Georgia, 'Times New Roman', serif;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font-family:var(--serif);color:var(--brun);background:var(--ivoire);line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-weight:500;line-height:1.1}
+  .wrap{width:min(var(--max),calc(100% - 2rem));margin-inline:auto}
+  .brand{font-style:italic;font-weight:500}
+
+  /* ornaments */
+  .kicker{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--or-2);font-weight:500}
+  .dark .kicker{color:var(--or)}
+  .rule{display:flex;align-items:center;gap:.6rem;margin:1rem 0 1.6rem}
+  .rule::before,.rule::after{content:"";flex:1;height:1px;background:var(--or);opacity:.8}
+  .rule i{width:8px;height:8px;background:var(--or);transform:rotate(45deg);display:block}
+  .rule.left::before{display:none}
+  .rule.left::after{max-width:160px}
+  .rule.short::before,.rule.short::after{max-width:110px}
+  .rule.short{justify-content:center}
+  .frame{position:relative;border:1px solid var(--or);padding:2.2rem}
+  .frame::before{content:"";position:absolute;inset:6px;border:1px solid var(--or);opacity:.55;pointer-events:none}
+  .frame .dia{position:absolute;width:11px;height:11px;background:var(--bleu);border:1px solid var(--or);transform:rotate(45deg)}
+  .frame .dia.tl{top:-6px;left:-6px}.frame .dia.tr{top:-6px;right:-6px}.frame .dia.bl{bottom:-6px;left:-6px}.frame .dia.br{bottom:-6px;right:-6px}
+  .light .frame .dia{background:var(--ivoire)}
+
+  /* sections */
+  section{padding:clamp(4rem,8vw,6.5rem) 0}
+  .dark{background:var(--bleu);color:var(--ivoire)}
+  .dark h2,.dark h3{color:var(--ivoire)}
+  .light{background:var(--ivoire)}
+  .light-2{background:var(--ivoire-2)}
+  h2.title{font-size:clamp(2rem,4.6vw,3.1rem);font-style:italic;font-weight:500;color:var(--bleu)}
+  .dark h2.title{color:var(--or)}
+  .lead{font-size:1.12rem;max-width:62ch;color:var(--brun-2)}
+  .dark .lead{color:rgba(251,244,233,.82)}
+  .center{text-align:center}
+  .center .lead{margin-inline:auto}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:.55rem;padding:.85rem 1.6rem;border:1px solid var(--or);color:var(--or);font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;transition:all .25s;background:transparent;cursor:pointer;font-family:inherit}
+  .btn:hover{background:var(--or);color:var(--bleu)}
+  .btn.solid{background:var(--or);color:var(--bleu)}
+  .btn.solid:hover{background:var(--ivoire);border-color:var(--ivoire)}
+  .light .btn{color:var(--bleu);border-color:var(--bleu)}
+  .light .btn:hover{background:var(--bleu);color:var(--or)}
+  .light .btn.solid{background:var(--bleu);color:var(--or)}
+  .light .btn.solid:hover{background:var(--or);color:var(--bleu);border-color:var(--or)}
+
+  /* NAV */
+  header{position:fixed;inset:0 0 auto 0;z-index:100;background:rgba(18,32,60,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--or-soft);transition:background .3s}
+  nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo-nav{display:flex;align-items:center;gap:.7rem;color:var(--or)}
+  .logo-nav svg{height:34px;width:auto}
+  .logo-nav .brand{font-size:1.45rem;line-height:1}
+  .links{display:flex;gap:1.9rem;align-items:center}
+  .links a{color:var(--ivoire);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;opacity:.85;transition:opacity .2s,color .2s}
+  .links a:hover{opacity:1;color:var(--or)}
+  .links .btn{padding:.55rem 1.1rem;font-size:.72rem}
+  .burger{display:none;background:none;border:0;color:var(--or);cursor:pointer;padding:.4rem}
+  .burger svg{width:28px;height:28px}
+  @media (max-width:900px){
+    .links{position:fixed;top:70px;left:0;right:0;flex-direction:column;background:var(--bleu);padding:1.6rem 1rem 2rem;gap:1.2rem;border-bottom:1px solid var(--or);transform:translateY(-130%);transition:transform .35s;opacity:0}
+    .links.open{transform:none;opacity:1}
+    .burger{display:block}
+  }
+
+  /* HERO */
+  .hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;color:var(--ivoire);padding:110px 0 70px;overflow:hidden;background:var(--bleu)}
+  .hero .bg{position:absolute;inset:0;background:url(img/salle-arcades.jpg) center/cover no-repeat;transform:scale(1.04)}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,32,60,.78) 0%,rgba(18,32,60,.62) 45%,rgba(13,24,48,.92) 100%)}
+  .hero .in{position:relative;z-index:2;width:min(880px,calc(100% - 2rem))}
+  .hero .logo-big svg{width:min(560px,90vw);height:auto;margin-inline:auto;filter:drop-shadow(0 10px 30px rgba(0,0,0,.35))}
+  .hero .tag{font-size:.8rem;letter-spacing:.34em;text-transform:uppercase;color:var(--or);margin-top:1.4rem}
+  .hero p.sub{font-size:clamp(1.15rem,2.4vw,1.5rem);font-style:italic;margin:1.2rem auto 0;max-width:34ch;color:rgba(251,244,233,.92)}
+  .hero .actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.2rem}
+  .hero .strip{position:relative;z-index:2;margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--or-soft);background:rgba(13,24,48,.55);backdrop-filter:blur(6px)}
+  .hero .strip div{padding:1rem .8rem;border-right:1px solid var(--or-soft);font-size:.92rem}
+  .hero .strip div:last-child{border-right:0}
+  .hero .strip b{display:block;font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--or);font-weight:500;margin-bottom:.25rem}
+  .hero .strip .open{color:#9BE0A8}.hero .strip .closed{color:#F0B8A0}
+  @media (max-width:640px){.hero .strip{grid-template-columns:1fr}.hero .strip div{border-right:0;border-bottom:1px solid var(--or-soft)}.hero .strip div:last-child{border-bottom:0}}
+
+  /* MAISON */
+  .maison-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3.5rem;align-items:center}
+  .maison-grid .txt p+p{margin-top:1rem}
+  .maison-grid .txt .lead{margin-bottom:1.2rem}
+  .maison-photos{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:.8rem}
+  .maison-photos img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;border:1px solid var(--or-soft)}
+  .maison-photos img:first-child{grid-column:1/3;aspect-ratio:16/9}
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3.5rem}
+  .pillar{border:1px solid var(--or);padding:1.5rem 1.2rem;text-align:center;background:var(--blanc)}
+  .pillar .ic{width:36px;height:36px;margin:0 auto .8rem;color:var(--or-2)}
+  .pillar h4{font-size:1.15rem;color:var(--bleu);font-style:italic;margin-bottom:.35rem}
+  .pillar p{font-size:.92rem;color:var(--brun-2)}
+  @media (max-width:900px){.maison-grid{grid-template-columns:1fr}.pillars{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.pillars{grid-template-columns:1fr}}
+
+  /* JOURNÉE */
+  .day{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--or);margin-top:2.5rem}
+  .day article{padding:1.8rem 1.3rem;border-right:1px solid var(--or-soft);position:relative}
+  .day article:last-child{border-right:0}
+  .day .h{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--or);margin-bottom:.4rem}
+  .day h3{font-size:1.5rem;font-style:italic;color:var(--ivoire);margin-bottom:.6rem}
+  .day p{font-size:.95rem;color:rgba(251,244,233,.82)}
+  .day .price{display:inline-block;margin-top:.8rem;color:var(--or);font-size:1.05rem}
+  @media (max-width:1000px){.day{grid-template-columns:1fr 1fr 1fr}.day article{border-bottom:1px solid var(--or-soft)}}
+  @media (max-width:640px){.day{grid-template-columns:1fr}.day article{border-right:0}}
+
+  /* CARTE */
+  .menu-sheet{background:var(--bleu);color:var(--ivoire);padding:clamp(1.6rem,4vw,3.2rem)}
+  .menu-sheet .head{text-align:center;margin-bottom:2rem}
+  .menu-sheet .head .brand{color:var(--or);font-size:clamp(2.2rem,5vw,3.2rem)}
+  .menu-sheet .head .sub{font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;margin-top:.3rem}
+  .menu-sheet .head h3{font-size:1.25rem;letter-spacing:.3em;text-transform:uppercase;font-weight:400;margin-top:1.6rem}
+  .menu-sheet .head em{display:block;color:var(--or);font-size:.95rem}
+  .menu-cols{display:grid;grid-template-columns:1fr 1fr;gap:2.4rem 3rem}
+  .mcat{margin-bottom:2rem}
+  .mcat h4{font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:var(--or);text-align:center;font-weight:500;display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+  .mcat h4::before,.mcat h4::after{content:"";flex:1;height:1px;background:var(--or);opacity:.7}
+  .mcat .subt{text-align:center;font-style:italic;color:var(--or);font-size:.95rem;margin:-.5rem 0 .6rem}
+  .dish{display:flex;align-items:baseline;gap:.5rem;padding:.3rem 0}
+  .dish .n{font-size:1.02rem}
+  .dish .dots{flex:1;border-bottom:1px dotted var(--or-soft);transform:translateY(-4px);min-width:18px}
+  .dish .p{color:var(--or);white-space:nowrap}
+  .dish-d{font-size:.84rem;font-style:italic;color:rgba(251,244,233,.72);margin:-.2rem 0 .3rem}
+  .dish.c{flex-direction:column;align-items:center;text-align:center;gap:0}
+  .formules{border:1px solid var(--or);margin-top:1.5rem;padding:1.6rem;text-align:center;position:relative}
+  .formules::before{content:"";position:absolute;inset:5px;border:1px solid var(--or);opacity:.5}
+  .formules h4{font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--or);font-weight:500}
+  .formules .fg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.2rem 0}
+  .formules .fg div{border-right:1px solid var(--or-soft);padding:.2rem .5rem}
+  .formules .fg div:last-child{border-right:0}
+  .formules .fg b{display:block;font-weight:400;font-size:.98rem}
+  .formules .fg span{display:block;color:var(--or);font-size:1.7rem;line-height:1.2}
+  .formules .alc{font-size:.95rem;letter-spacing:.08em}
+  .formules .alc em{color:var(--or);font-style:normal}
+  .menu-note{text-align:center;font-style:italic;font-size:.92rem;color:rgba(251,244,233,.75);margin-top:1.6rem}
+  @media (max-width:760px){.menu-cols{grid-template-columns:1fr}.formules .fg{grid-template-columns:1fr}.formules .fg div{border-right:0;border-bottom:1px solid var(--or-soft);padding:.6rem 0}.formules .fg div:last-child{border-bottom:0}}
+
+  /* FOOD photos strip */
+  .food-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-top:2.2rem}
+  .food-strip figure{position:relative;overflow:hidden;border:1px solid var(--or-soft)}
+  .food-strip img{width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .6s}
+  .food-strip figure:hover img{transform:scale(1.05)}
+  .food-strip figcaption{position:absolute;inset:auto 0 0 0;padding:1.4rem .9rem .8rem;background:linear-gradient(transparent,rgba(13,24,48,.9));color:var(--ivoire);font-style:italic;font-size:.95rem}
+  @media (max-width:760px){.food-strip{grid-template-columns:1fr 1fr}}
+
+  /* BAR */
+  .bar-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+  .cocktails .dish .n{color:var(--brun)}
+  .cocktails .dish .p{color:var(--or-2)}
+  .cocktails .dish-d{color:var(--brun-2)}
+  .cocktails .mcat h4{color:var(--or-2)}
+  .cocktails .mcat h4::before,.cocktails .mcat h4::after{background:var(--or-2)}
+  .hh{background:var(--bleu);color:var(--ivoire);padding:1.8rem;margin-top:1rem;position:relative}
+  .hh::before{content:"";position:absolute;inset:6px;border:1px solid var(--or);pointer-events:none}
+  .hh .kicker{color:var(--or)}
+  .hh h3{font-size:2rem;font-style:italic;color:var(--or);margin:.3rem 0 .4rem}
+  .hh .tt{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:1rem;text-align:center}
+  .hh .tt div{border:1px solid var(--or-soft);padding:.7rem .3rem}
+  .hh .tt span{display:block;color:var(--or);font-size:1.5rem;line-height:1.1}
+  .hh .tt small{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase}
+  .bar-photos{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .bar-photos img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--or-soft)}
+  .bar-photos img.wide{grid-column:1/3;aspect-ratio:16/10}
+  @media (max-width:900px){.bar-grid{grid-template-columns:1fr}}
+
+  /* CAVE accordion */
+  details.cave{border:1px solid var(--or);margin-top:.8rem;background:rgba(255,255,255,.02)}
+  details.cave summary{cursor:pointer;list-style:none;padding:1.1rem 1.4rem;display:flex;align-items:center;justify-content:space-between;font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;color:var(--or)}
+  details.cave summary::-webkit-details-marker{display:none}
+  details.cave summary::after{content:"+";font-size:1.5rem;line-height:1;transition:transform .3s}
+  details.cave[open] summary::after{transform:rotate(45deg)}
+  details.cave .body{padding:.4rem 1.4rem 1.4rem;display:grid;grid-template-columns:1fr 1fr;gap:0 2.5rem}
+  details.cave .dish .n{font-size:.98rem}
+  details.cave .dish-d{font-size:.8rem}
+  details.cave .grp{font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--or);margin:1rem 0 .3rem;grid-column:1/-1}
+  .local{display:inline-block;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--or);color:var(--or);padding:.1rem .45rem;margin-left:.4rem;vertical-align:middle}
+  @media (max-width:700px){details.cave .body{grid-template-columns:1fr}}
+
+  /* GALERIE */
+  .gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:.7rem;margin-top:2rem}
+  .gal a{overflow:hidden;border:1px solid var(--or-soft);display:block}
+  .gal img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .gal a:hover img{transform:scale(1.06)}
+  .gal .w{grid-column:span 2}.gal .t{grid-row:span 2}
+  @media (max-width:900px){.gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px}}
+  .lb{position:fixed;inset:0;background:rgba(13,24,48,.94);display:none;place-items:center;z-index:200;padding:2rem}
+  .lb.on{display:grid}
+  .lb img{max-width:100%;max-height:90vh;border:1px solid var(--or)}
+  .lb button{position:absolute;top:1rem;right:1.2rem;background:none;border:1px solid var(--or);color:var(--or);width:44px;height:44px;font-size:1.5rem;cursor:pointer}
+
+  /* EVENTS */
+  .ev{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.5rem}
+  .ev article{background:var(--blanc);border:1px solid var(--or);display:flex;flex-direction:column}
+  .ev img{width:100%;aspect-ratio:4/3;object-fit:cover}
+  .ev .b{padding:1.5rem}
+  .ev .b .kicker{display:block;margin-bottom:.3rem}
+  .ev h3{font-size:1.6rem;font-style:italic;color:var(--bleu);margin-bottom:.5rem}
+  .ev p{font-size:.95rem;color:var(--brun-2)}
+  .ev .b a{display:inline-block;margin-top:1rem;color:var(--bleu);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid var(--or)}
+  @media (max-width:900px){.ev{grid-template-columns:1fr}}
+  .privat{margin-top:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+  .privat img{width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--or)}
+  .privat ul{list-style:none;margin:1rem 0 1.5rem;display:grid;gap:.5rem}
+  .privat li{padding-left:1.2rem;position:relative;color:var(--brun-2)}
+  .privat li::before{content:"";position:absolute;left:0;top:.6rem;width:7px;height:7px;background:var(--or);transform:rotate(45deg)}
+  @media (max-width:900px){.privat{grid-template-columns:1fr}}
+
+  /* SCÈNE OUVERTE */
+  .so-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:3rem;margin-top:2.5rem;align-items:start}
+  .so-h{font-size:1.7rem;font-style:italic;color:var(--or)}
+  .prog{display:grid;gap:.7rem}
+  .prog .slot{display:grid;grid-template-columns:86px 1fr;gap:1rem;border:1px solid var(--or-soft);padding:.9rem 1rem;align-items:center;background:rgba(255,255,255,.02)}
+  .prog .d{text-align:center;border-right:1px solid var(--or-soft);padding-right:.8rem}
+  .prog .d b{display:block;font-size:1.7rem;line-height:1;color:var(--or);font-weight:500}
+  .prog .d span{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase}
+  .prog .a{font-size:1.1rem;font-style:italic}
+  .prog .g{font-size:.86rem;color:rgba(251,244,233,.75)}
+  .prog .g em{color:var(--or);font-style:normal;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;margin-right:.5rem}
+  .prog .empty{border:1px dashed var(--or-soft);padding:1.4rem;text-align:center;font-style:italic;color:rgba(251,244,233,.7)}
+  .so-note{font-size:.86rem;font-style:italic;color:rgba(251,244,233,.7);margin-top:1rem}
+  .so-note a{color:var(--or)}
+  .so-how{margin-top:2rem;border:1px solid var(--or-soft);padding:1.4rem}
+  .so-how h4{font-size:.76rem;letter-spacing:.3em;text-transform:uppercase;color:var(--or);font-weight:500;margin-bottom:.8rem}
+  .so-how ol{padding-left:1.2rem;display:grid;gap:.45rem;font-size:.95rem;color:rgba(251,244,233,.85)}
+  .so-form{background:rgba(255,255,255,.03);border:1px solid var(--or);padding:1.8rem;position:relative}
+  .so-form::before{content:"";position:absolute;inset:6px;border:1px solid var(--or);opacity:.45;pointer-events:none}
+  .so-form form{display:grid;gap:1rem;position:relative}
+  .so-form label{display:grid;gap:.35rem;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--or)}
+  .so-form input,.so-form select,.so-form textarea{font-family:inherit;font-size:1rem;letter-spacing:0;text-transform:none;color:var(--ivoire);background:rgba(13,24,48,.6);border:1px solid var(--or-soft);padding:.7rem .8rem;width:100%;border-radius:0;-webkit-appearance:none;appearance:none}
+  .so-form select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23D2B06B' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;padding-right:2rem}
+  .so-form select option{color:var(--brun);background:var(--ivoire)}
+  .so-form input:focus,.so-form select:focus,.so-form textarea:focus{outline:none;border-color:var(--or)}
+  .so-form input::placeholder,.so-form textarea::placeholder{color:rgba(251,244,233,.4)}
+  .so-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .so-form .chk{grid-template-columns:auto 1fr;align-items:start;text-transform:none;letter-spacing:0;font-size:.85rem;color:rgba(251,244,233,.8)}
+  .so-form .chk input{width:auto;margin-top:.25rem;appearance:auto;-webkit-appearance:auto;accent-color:var(--or)}
+  .so-form .hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
+  .so-form button{justify-self:start}
+  .so-form.sent form>*:not(#form-msg){display:none}
+  @media (max-width:900px){.so-grid{grid-template-columns:1fr}}
+  @media (max-width:560px){.so-form .row2{grid-template-columns:1fr}}
+
+  /* HORAIRES & CONTACT */
+  .hc{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+  .hours{width:100%;border-collapse:collapse}
+  .hours td{padding:.6rem 0;border-bottom:1px solid var(--or-soft);font-size:1rem}
+  .hours td:first-child{letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;color:var(--or)}
+  .hours td:last-child{text-align:right;color:rgba(251,244,233,.9)}
+  .hours tr.today td{color:var(--or);font-weight:500}
+  .hours tr.today td:first-child::after{content:" · aujourd'hui";letter-spacing:0;text-transform:none;font-style:italic;font-size:.78rem}
+  .contact-list{list-style:none;display:grid;gap:1rem;margin-top:1.4rem}
+  .contact-list li{display:flex;gap:1rem;align-items:flex-start}
+  .contact-list svg{width:22px;height:22px;flex:none;color:var(--or);margin-top:.15rem}
+  .contact-list b{display:block;font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--or);font-weight:500}
+  .contact-list a:hover{color:var(--or)}
+  .map{margin-top:1.6rem;border:1px solid var(--or);aspect-ratio:16/10;background:var(--bleu-2)}
+  .map iframe{width:100%;height:100%;border:0;filter:grayscale(.2) contrast(1.05)}
+  @media (max-width:900px){.hc{grid-template-columns:1fr}}
+
+  /* FOOTER */
+  footer{background:var(--bleu-2);color:rgba(251,244,233,.75);padding:3rem 0 2rem;border-top:1px solid var(--or-soft);text-align:center;font-size:.9rem}
+  footer .brand{color:var(--or);font-size:2rem}
+  footer .tag{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--or);margin:.3rem 0 1.2rem}
+  footer nav.f{display:flex;gap:1.4rem;justify-content:center;flex-wrap:wrap;margin:1rem 0 1.4rem;height:auto}
+  footer nav.f a{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase}
+  footer nav.f a:hover{color:var(--or)}
+  footer small{display:block;font-size:.78rem;opacity:.7;margin-top:1rem;line-height:1.6}
+  .abuse{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-top:.8rem}
+
+  /* legal modal */
+  #mentions{display:none;position:fixed;inset:0;background:rgba(13,24,48,.9);z-index:300;padding:2rem;overflow:auto}
+  #mentions:target{display:block}
+  #mentions .box{background:var(--ivoire);color:var(--brun);max-width:720px;margin:2rem auto;padding:2.2rem;border:1px solid var(--or);position:relative;font-size:.95rem}
+  #mentions .box h3{color:var(--bleu);font-style:italic;font-size:1.6rem;margin-bottom:.8rem}
+  #mentions .box p+p{margin-top:.6rem}
+  #mentions .close{position:absolute;top:.8rem;right:1rem;font-size:1.6rem;color:var(--bleu)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#accueil" class="logo-nav" aria-label="Bô Passage — accueil">
+        <svg viewBox="0 0 64 44" fill="none" stroke="#D2B06B" stroke-width="1.6" aria-hidden="true">
+          <path d="M2 42V18a10 10 0 0 1 20 0v24M22 42V18a10 10 0 0 1 20 0v24M42 42V18a10 10 0 0 1 20 0v24"/>
+          <path d="M12 8l2 2-2 2-2-2zM32 8l2 2-2 2-2-2zM52 8l2 2-2 2-2-2z" fill="#D2B06B" stroke="none"/>
+          <path d="M2 42h60" />
+        </svg>
+        <span class="brand">Bô Passage</span>
+      </a>
+      <button class="burger" aria-label="Menu" aria-expanded="false" onclick="toggleNav()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div class="links" id="links">
+        <a href="#maison">La maison</a>
+        <a href="#carte">La carte</a>
+        <a href="#bar">Bar &amp; cocktails</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#evenements">Soirées</a>
+        <a href="#scene-ouverte">Scène ouverte</a>
+        <a href="#contact">Horaires</a>
+        <a href="/jeu" style="color:#D2B06B">🎁 Jeu</a>
+        <a href="tel:+33451249989" class="btn">Réserver</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="accueil">
+  <div class="bg" role="img" aria-label="La salle du Bô Passage, sous les arcades de la place du Marché"></div>
+  <div class="veil"></div>
+  <div class="in">
+    <div class="logo-big">
+      <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" aria-label="Bô Passage — Bar · Tapas · Restaurant">
+        <g fill="none" stroke="#D2B06B" stroke-width="1.6" opacity=".85">
+          <path d="M100 190V90a40 40 0 0 1 80 0v100"/>
+          <path d="M180 190V90a40 40 0 0 1 80 0v100"/>
+          <path d="M260 190V90a40 40 0 0 1 80 0v100"/>
+          <path d="M340 190V90a40 40 0 0 1 80 0v100"/>
+          <path d="M420 190V90a40 40 0 0 1 80 0v100"/>
+          <path d="M92 90h416M92 190h416"/>
+        </g>
+        <g fill="#D2B06B">
+          <path d="M140 60l5 5-5 5-5-5zM220 60l5 5-5 5-5-5zM300 60l5 5-5 5-5-5zM380 60l5 5-5 5-5-5zM460 60l5 5-5 5-5-5z"/>
+        </g>
+        <text x="300" y="158" text-anchor="middle" font-family="Gelasio, Georgia, serif" font-style="italic" font-weight="500" font-size="92" fill="#D2B06B">Bô Passage</text>
+        <g stroke="#D2B06B" stroke-width="1.2"><path d="M180 222h100M320 222h100"/></g>
+        <g fill="#D2B06B"><path d="M300 215l7 7-7 7-7-7zM180 219l3 3-3 3-3-3zM420 219l3 3-3 3-3-3z"/></g>
+        <text x="300" y="252" text-anchor="middle" font-family="Gelasio, Georgia, serif" font-size="15" letter-spacing="7" fill="#FBF4E9">BAR · TAPAS · RESTAURANT</text>
+      </svg>
+    </div>
+    <p class="tag">Place du Marché — Roanne</p>
+    <p class="sub">Cuisine marocaine, cocktails maison et soirées sous les arcades, du café du matin au dernier verre. Ouvert 7 jours sur 7.</p>
+    <div class="actions">
+      <a href="tel:+33451249989" class="btn solid">Réserver une table</a>
+      <a href="#carte" class="btn">Découvrir la carte</a>
+    </div>
+    <div class="strip">
+      <div><b>Aujourd'hui</b><span id="today-status">Voir les horaires</span></div>
+      <div><b>Happy hour</b>Tous les soirs 17h30 – 19h30</div>
+      <div><b>Adresse</b>17 place du Marché, 42300 Roanne</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LA MAISON ============ -->
+<section class="light" id="maison">
+  <div class="wrap">
+    <div class="maison-grid">
+      <div class="txt reveal">
+        <span class="kicker">La maison</span>
+        <h2 class="title">Un passage sous les arcades</h2>
+        <div class="rule left"><i></i></div>
+        <p class="lead">Au cœur de Roanne, face au marché, le Bô Passage occupe une belle maison de la place : hauts plafonds, grandes fenêtres en arcade, parquet, fauteuils jaunes et vert profond, cheminée de marbre dans le salon du fond.</p>
+        <p>Depuis 2026, une nouvelle équipe a repris la maison avec une idée simple : un lieu où l'on vient à toute heure. Le café du matin en terrasse, un déjeuner rapide et généreux, l'apéritif entre collègues, un dîner marocain traditionnel ou une soirée cocktails jusqu'à une heure du matin.</p>
+        <p>En cuisine, les tajines, couscous, briouates et pastillas sont préparés le matin même, dans le respect de la tradition. Au bar, les cocktails sont dosés au millilitre, avec du basilic frais, de la menthe, du citron vert pressé minute.</p>
+        <p style="margin-top:1.4rem"><a href="#contact" class="btn">Nous trouver</a></p>
+      </div>
+      <div class="maison-photos reveal">
+        <img src="img/salle-fauteuils.jpg" alt="La grande salle et ses fenêtres en arcade donnant sur la place du Marché" loading="lazy">
+        <img src="img/salon-cheminee.jpg" alt="Le salon avec sa cheminée en marbre" loading="lazy">
+        <img src="img/salon-vert.jpg" alt="La salle du fond, banquettes vertes et coussins jaunes" loading="lazy">
+      </div>
+    </div>
+
+    <div class="pillars reveal">
+      <div class="pillar">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h12v6a5 5 0 0 1-10 0V8zM16 9h2a2 2 0 0 1 0 4h-2M5 21h10"/></svg>
+        <h4>Café dès 9h</h4><p>Tous les jours, et surtout les mardis et vendredis, jours de marché. Café illy, viennoiseries, journaux.</p>
+      </div>
+      <div class="pillar">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 12h18M5 12a7 7 0 0 1 14 0M4 16h16M12 5v1"/></svg>
+        <h4>Cuisine marocaine</h4><p>Tajines, couscous, tapas et pâtisseries traditionnelles faits maison.</p>
+      </div>
+      <div class="pillar">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 3h12l-5 8v7h3v2H8v-2h3v-7zM7.5 6h9"/></svg>
+        <h4>Cocktails maison</h4><p>Basil Smash, Espresso Martini, Mojito, Spritz framboise… et un happy hour tous les soirs.</p>
+      </div>
+      <div class="pillar">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 20V9a8 8 0 0 1 16 0v11M4 20h16M9 20v-5h6v5"/></svg>
+        <h4>Un lieu à privatiser</h4><p>Anniversaires, pots de départ, repas de famille, même hors horaires d'ouverture.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ UNE JOURNÉE ============ -->
+<section class="dark" id="journee">
+  <div class="wrap center">
+    <span class="kicker">Du matin au bout de la nuit</span>
+    <h2 class="title">Une journée au Bô Passage</h2>
+    <div class="rule short"><i></i></div>
+    <p class="lead">Chaque moment a sa carte. Venez pour l'un, restez pour le suivant.</p>
+    <div class="day reveal">
+      <article><div class="h">9h – 11h30</div><h3>Le matin</h3><p>Café, thé, viennoiseries. Ouvert dès 9h tous les jours, idéal après le marché du mardi et du vendredi.</p><span class="price">Café 2 €</span></article>
+      <article><div class="h">12h – 14h30</div><h3>Le déjeuner</h3><p>Plat du jour maison, assiette généreuse, service en 30 minutes si vous êtes pressés. Mardi, c'est tajine.</p><span class="price">Formule 21 € · 26 €</span></article>
+      <article><div class="h">17h30 – 19h30</div><h3>L'happy hour</h3><p>Tous les soirs. Demi, pinte, cocktail au choix à petit prix, planche à partager.</p><span class="price">Cocktail 6 €</span></article>
+      <article><div class="h">19h – 1h</div><h3>Le soir</h3><p>Tapas marocaines, plateaux à partager, cocktails et bulles. Jusqu'à 22h30 en début de semaine, 1h du matin du jeudi au samedi.</p><span class="price">Tapas 7 € pièce</span></article>
+      <article><div class="h">Dimanche 9h – 16h</div><h3>Le brunch</h3><p>Sucré, salé, boissons chaudes et jus frais. Uniquement sur réservation.</p><span class="price">Sur réservation</span></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LA CARTE ============ -->
+<section class="light-2" id="carte">
+  <div class="wrap">
+    <div class="center">
+      <span class="kicker">À table</span>
+      <h2 class="title">La carte marocaine</h2>
+      <div class="rule short"><i></i></div>
+      <p class="lead">Spécialités traditionnelles préparées chaque jour. La carte complète, telle qu'elle vous est servie.</p>
+    </div>
+
+    <div class="food-strip reveal">
+      <figure><img src="img/tajine.jpg" alt="Tajine d'agneau aux pruneaux et amandes" loading="lazy"><figcaption>Tajine agneau, pruneaux &amp; amandes</figcaption></figure>
+      <figure><img src="img/plateau-decouverte.jpg" alt="Plateau Découverte : briouates, kefta, zaalouk, taktouka, pain marocain" loading="lazy"><figcaption>Plateau Découverte</figcaption></figure>
+      <figure><img src="img/tapas-marocaines.jpg" alt="Tapas marocaines à partager" loading="lazy"><figcaption>Tapas marocaines à partager</figcaption></figure>
+      <figure><img src="img/assiette-du-jour.jpg" alt="Assiette du jour : boulettes maison, salade et légumes" loading="lazy"><figcaption>L'assiette du jour</figcaption></figure>
+    </div>
+
+    <div class="menu-sheet reveal" style="margin-top:2.5rem">
+      <div class="frame">
+        <i class="dia tl"></i><i class="dia tr"></i><i class="dia bl"></i><i class="dia br"></i>
+        <div class="head">
+          <div class="brand">Bô Passage</div>
+          <div class="sub">Bar · Tapas · Restaurant</div>
+          <h3>Carte marocaine</h3>
+          <em>Spécialités traditionnelles</em>
+        </div>
+
+        <div class="menu-cols">
+          <div>
+            <div class="mcat">
+              <h4>Les entrées</h4>
+              <div class="subt">Salades</div>
+              <div class="dish c"><span class="n">Salade de poivrons et tomates</span></div>
+              <div class="dish-d" style="text-align:center">Poivrons grillés, tomates, ail, huile d'olive, paprika et cumin</div>
+              <div class="dish c"><span class="n">Zaalouk</span></div>
+              <div class="dish-d" style="text-align:center">Caviar d'aubergines, ail, coriandre, tomate, cumin et paprika</div>
+              <div class="dish c"><span class="n">Salade de carottes à la marocaine</span></div>
+              <div class="dish-d" style="text-align:center">Carottes, ail, cumin, citron et coriandre</div>
+              <div class="dish c"><span class="n">Salade de pommes de terre</span></div>
+              <div class="dish-d" style="text-align:center">Pommes de terre, persil ou coriandre, citron confit et huile d'olive</div>
+              <div class="dish c"><span class="n">Salade de concombre</span></div>
+              <div class="dish-d" style="text-align:center">Concombre, tomate et oignon, huile d'olive et herbes fraîches</div>
+              <div class="dish c"><span class="n">Salade de betteraves à la marocaine</span></div>
+              <div class="dish-d" style="text-align:center">Betteraves, persil et huile d'olive</div>
+            </div>
+            <div class="mcat">
+              <h4>Les tajines</h4>
+              <div class="dish c"><span class="n">Tajine poulet ou viande</span></div><div class="dish-d" style="text-align:center">Aux légumes de saison</div>
+              <div class="dish c"><span class="n">Tajine agneau</span></div><div class="dish-d" style="text-align:center">Aux pruneaux et amandes</div>
+              <div class="dish c"><span class="n">Tajine kefta &amp; œufs</span></div><div class="dish-d" style="text-align:center">Boulettes de viande hachée épicées, sauce tomate et œufs</div>
+              <div class="dish c"><span class="n">Tajine poulet ou viande &amp; abricots secs</span></div>
+              <div class="dish c"><span class="n">Tajine agneau, abricots secs &amp; amandes</span></div>
+              <div class="dish c"><span class="n">Tajine végétarien</span></div><div class="dish-d" style="text-align:center">Mélange de légumes de saison</div>
+            </div>
+            <div class="mcat">
+              <h4>Les couscous</h4>
+              <div class="dish c"><span class="n">Couscous végétarien</span></div><div class="dish-d" style="text-align:center">Aux légumes de saison</div>
+              <div class="dish c"><span class="n">Couscous poulet ou viande</span></div><div class="dish-d" style="text-align:center">Aux légumes de saison</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mcat">
+              <h4>Tapas marocaines</h4>
+              <div class="dish"><span class="n">Briouates à la viande hachée</span><span class="dots"></span><span class="p">7 €</span></div>
+              <div class="dish"><span class="n">Briouates au fromage</span><span class="dots"></span><span class="p">7 €</span></div>
+              <div class="dish"><span class="n">Zaalouk</span><span class="dots"></span><span class="p">7 €</span></div>
+              <div class="dish-d">Salade chaude d'aubergines</div>
+              <div class="dish"><span class="n">Taktouka</span><span class="dots"></span><span class="p">7 €</span></div>
+              <div class="dish-d">Poivrons grillés et tomates parfumées à l'ail et aux épices</div>
+              <div class="dish"><span class="n">Kefta grillée</span><span class="dots"></span><span class="p">7 €</span></div>
+              <div class="dish-d">Petites brochettes aux boulettes de viande hachée</div>
+              <div class="dish"><span class="n">Pastilla au poulet</span><span class="dots"></span><span class="p">7 €</span></div>
+              <div class="dish-d">Pâte fine croustillante, poulet, amandes, épices</div>
+              <div class="dish"><span class="n">Mini msemen farcis</span><span class="dots"></span><span class="p">7 €</span></div>
+              <div class="dish"><span class="n">Mini batbout farci à la kefta</span><span class="dots"></span><span class="p">7 €</span></div>
+              <div class="dish"><span class="n">Fève à la marocaine</span><span class="dots"></span><span class="p">7 €</span></div>
+              <div class="dish-d">Bessara, ail et huile d'olive</div>
+            </div>
+            <div class="mcat">
+              <h4>Les plateaux</h4>
+              <div class="dish c"><span class="n">Plateau Découverte — <span class="p">25 €</span></span></div>
+              <div class="dish-d" style="text-align:center">Briouates, kefta grillée, zaalouk, taktouka, olives marinées et pain marocain</div>
+              <div class="dish c"><span class="n">Plateau Traditionnel — <span class="p">30 €</span></span></div>
+              <div class="dish-d" style="text-align:center">Briouate à la viande hachée, kefta grillée, maakouda, zaalouk, taktouka, carottes à la chermoula, olives vertes et violettes, mini batbout</div>
+            </div>
+            <div class="mcat">
+              <h4>Desserts</h4>
+              <div class="dish c"><span class="n">Chebakia</span></div>
+              <div class="dish c"><span class="n">Ghriba</span></div>
+              <div class="dish c"><span class="n">Sellou</span></div>
+              <div class="dish c"><span class="n">Kaab el Ghazal</span></div><div class="dish-d" style="text-align:center">Corne de gazelle</div>
+              <div class="dish c"><span class="n">Mhencha</span></div>
+              <div class="dish c"><span class="n">Briouates aux amandes</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="formules">
+          <h4>Nos formules</h4>
+          <p style="font-style:italic;font-size:.92rem;margin-top:.3rem">Composez votre menu parmi nos spécialités marocaines traditionnelles</p>
+          <div class="fg">
+            <div><b>Entrée + Plat + Dessert</b><span>26 €</span></div>
+            <div><b>Entrée + Plat <em style="color:var(--or)">ou</em> Plat + Dessert</b><span>21 €</span></div>
+            <div><b>Menu enfant (moins de 12 ans)</b><span>13 €</span></div>
+          </div>
+          <p class="alc">À LA CARTE &nbsp;·&nbsp; Entrée <em>8,50 €</em> &nbsp;·&nbsp; Plat <em>18 €</em> &nbsp;·&nbsp; Dessert <em>6,50 €</em></p>
+        </div>
+        <p class="menu-note">Toutes nos préparations sont réalisées dans le respect de la tradition marocaine, pour une expérience authentique et généreuse. Prix TTC, service compris. Liste des allergènes disponible sur demande.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAR & COCKTAILS ============ -->
+<section class="light" id="bar">
+  <div class="wrap">
+    <div class="bar-grid">
+      <div class="reveal">
+        <span class="kicker">Au bar</span>
+        <h2 class="title">Cocktails &amp; apéritifs</h2>
+        <div class="rule left"><i></i></div>
+        <p class="lead" style="margin-bottom:1.6rem">Quarante bouteilles derrière le comptoir, des verres pour toute la place du Marché, et une barmaid qui dose au millilitre. Shaker, basilic frais, menthe, citron vert pressé minute.</p>
+
+        <div class="cocktails">
+          <div class="mcat">
+            <h4>Cocktails</h4>
+            <div class="dish"><span class="n">Basil Smash</span><span class="dots"></span><span class="p">11 €</span></div><div class="dish-d">Gin, basilic frais, citron vert — celui qu'on vous redemande</div>
+            <div class="dish"><span class="n">Espresso Martini</span><span class="dots"></span><span class="p">11 €</span></div><div class="dish-d">Vodka, café, liqueur de café</div>
+            <div class="dish"><span class="n">Mojito</span><span class="dots"></span><span class="p">10 €</span></div><div class="dish-d">Rhum blanc &amp; brun, menthe, citron vert</div>
+            <div class="dish"><span class="n">Spritz</span><span class="dots"></span><span class="p">8 €</span></div>
+            <div class="dish"><span class="n">Bellini</span><span class="dots"></span><span class="p">12 €</span></div><div class="dish-d">Champagne, jus de pêche frais</div>
+            <div class="dish"><span class="n">Champamiel</span><span class="dots"></span><span class="p">13 €</span></div><div class="dish-d">Champagne, miel, framboise fraîche</div>
+            <div class="dish"><span class="n">Piña Colada</span><span class="dots"></span><span class="p">10 €</span></div><div class="dish-d">Rhum, coco</div>
+            <div class="dish"><span class="n">St Germain</span><span class="dots"></span><span class="p">8 €</span></div>
+            <div class="dish"><span class="n">Cocktail du jour</span><span class="dots"></span><span class="p">8 €</span></div>
+          </div>
+          <div class="mcat">
+            <h4>Mocktails · sans alcool</h4>
+            <div class="dish"><span class="n">Free Mojito</span><span class="dots"></span><span class="p">7 €</span></div>
+            <div class="dish"><span class="n">Free Piña Colada</span><span class="dots"></span><span class="p">7 €</span></div>
+          </div>
+          <div class="mcat">
+            <h4>Apéritifs</h4>
+            <div class="dish"><span class="n">Coupe de champagne maison</span><span class="dots"></span><span class="p">10 €</span></div>
+            <div class="dish"><span class="n">Kir</span><span class="dots"></span><span class="p">4 €</span></div>
+            <div class="dish"><span class="n">Martini blanc / rouge</span><span class="dots"></span><span class="p">6 €</span></div>
+            <div class="dish"><span class="n">Ricard</span><span class="dots"></span><span class="p">6 €</span></div>
+            <div class="dish"><span class="n">Pastis</span><span class="dots"></span><span class="p">5 €</span></div>
+            <div class="dish"><span class="n">Baileys</span><span class="dots"></span><span class="p">7 €</span></div>
+            <div class="dish"><span class="n">Malibu ananas</span><span class="dots"></span><span class="p">6 €</span></div>
+          </div>
+        </div>
+
+        <div class="hh">
+          <span class="kicker">Tous les soirs</span>
+          <h3>Happy hour 17h30 – 19h30</h3>
+          <p style="font-size:.95rem;color:rgba(251,244,233,.85)">Du lundi au samedi, pour commencer la soirée en douceur. Planche charcuterie-fromages à partager.</p>
+          <div class="tt">
+            <div><span>2,50 €</span><small>le demi</small></div>
+            <div><span>5 €</span><small>la pinte</small></div>
+            <div><span>6 €</span><small>cocktail au choix</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bar-photos reveal">
+        <img src="img/bar-bouteilles.jpg" class="wide" alt="Le bar du Bô Passage et ses bouteilles" loading="lazy">
+        <img src="img/basil-smash.jpg" alt="Basil Smash, gin et basilic frais" loading="lazy">
+        <img src="img/spritz-framboise.jpg" alt="Spritz framboise en coupe" loading="lazy">
+        <img src="img/espresso-martini.jpg" alt="Espresso Martini" loading="lazy">
+        <img src="img/barmaid.jpg" alt="La barmaid au shaker" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LA CAVE ============ -->
+<section class="dark" id="cave">
+  <div class="wrap">
+    <div class="center">
+      <span class="kicker">La cave &amp; les boissons</span>
+      <h2 class="title">Vins, bulles &amp; spiritueux</h2>
+      <div class="rule short"><i></i></div>
+      <p class="lead">Une cave courte mais choisie, avec une place d'honneur pour la Côte Roannaise du Domaine des 7 Parcelles, à Villemontais, à vingt minutes d'ici.</p>
+    </div>
+
+    <div class="reveal" style="margin-top:2rem">
+      <details class="cave" open>
+        <summary>Vins au verre &amp; bulles</summary>
+        <div class="body">
+          <div class="grp">Vins au verre (12 cl)</div>
+          <div><div class="dish"><span class="n">Blanc — Côte Roannaise « La Passation »<span class="local">Local</span></span><span class="dots"></span><span class="p">5 €</span></div><div class="dish-d">Domaine des 7 Parcelles</div>
+          <div class="dish"><span class="n">Blanc — Côtes du Rhône</span><span class="dots"></span><span class="p">5 €</span></div>
+          <div class="dish"><span class="n">Blanc — du moment</span><span class="dots"></span><span class="p">6 €</span></div>
+          <div class="dish"><span class="n">Rouge — Côte Roannaise « Gamay &amp; Co »<span class="local">Local</span></span><span class="dots"></span><span class="p">5 €</span></div><div class="dish-d">Domaine des 7 Parcelles</div></div>
+          <div><div class="dish"><span class="n">Rouge — Côtes du Rhône</span><span class="dots"></span><span class="p">7 €</span></div>
+          <div class="dish"><span class="n">Rouge — du moment</span><span class="dots"></span><span class="p">7 €</span></div>
+          <div class="dish"><span class="n">Rosé — sélection du moment</span><span class="dots"></span><span class="p">6 €</span></div>
+          <div class="dish"><span class="n">Prosecco</span><span class="dots"></span><span class="p">6 €</span></div>
+          <div class="dish"><span class="n">Coupe de Champagne</span><span class="dots"></span><span class="p">10 €</span></div></div>
+          <div class="grp">Les bulles (bouteille)</div>
+          <div><div class="dish"><span class="n">Rosé pétillant demi-sec « 7 »<span class="local">Local</span></span><span class="dots"></span><span class="p">21 €</span></div><div class="dish-d">Domaine des 7 Parcelles</div>
+          <div class="dish"><span class="n">Prosecco</span><span class="dots"></span><span class="p">21 €</span></div></div>
+          <div><div class="dish"><span class="n">Moscato d'Asti</span><span class="dots"></span><span class="p">21 €</span></div>
+          <div class="dish"><span class="n">Italie « Barolo Villa Pani » Barbera d'Asti</span><span class="dots"></span><span class="p">49 €</span></div></div>
+          <div class="grp">Champagnes (75 cl)</div>
+          <div><div class="dish"><span class="n">Brut Blanc de Blancs 1er Cru — Haton &amp; Filles</span><span class="dots"></span><span class="p">78 €</span></div>
+          <div class="dish"><span class="n">Brut Impérial — Moët &amp; Chandon</span><span class="dots"></span><span class="p">98 €</span></div>
+          <div class="dish"><span class="n">Brut — Veuve Clicquot</span><span class="dots"></span><span class="p">120 €</span></div></div>
+          <div><div class="dish"><span class="n">Brut Rosé — Deutz</span><span class="dots"></span><span class="p">120 €</span></div>
+          <div class="dish"><span class="n">Brut Blanc de Blancs — Deutz</span><span class="dots"></span><span class="p">190 €</span></div>
+          <div class="dish"><span class="n">Brut — Dom Pérignon</span><span class="dots"></span><span class="p">300 €</span></div></div>
+        </div>
+      </details>
+
+      <details class="cave">
+        <summary>La cave · rouges, blancs, rosés</summary>
+        <div class="body">
+          <div class="grp">Rouges</div>
+          <div><div class="dish"><span class="n">Côte Roannaise « Gamay &amp; Co »<span class="local">Local</span></span><span class="dots"></span><span class="p">15 €</span></div><div class="dish-d">Domaine des 7 Parcelles</div>
+          <div class="dish"><span class="n">Côte du Rhône « Parallèle 45 » Jaboulet Aîné</span><span class="dots"></span><span class="p">25 €</span></div>
+          <div class="dish"><span class="n">Bourgogne « Mercurey » Buissonnier</span><span class="dots"></span><span class="p">33 €</span></div>
+          <div class="dish"><span class="n">Saint-Joseph — Pierre Gaillard</span><span class="dots"></span><span class="p">54 €</span></div></div>
+          <div><div class="dish"><span class="n">Bourgogne « Rully » Domaine Doudet Naudin</span><span class="dots"></span><span class="p">59 €</span></div>
+          <div class="dish"><span class="n">Bourgogne « Les Guerets 1er Cru » Aloxe-Corton</span><span class="dots"></span><span class="p">76 €</span></div>
+          <div class="dish"><span class="n">Côte du Rhône « Côte Rôtie » P. Gaillard</span><span class="dots"></span><span class="p">76 €</span></div></div>
+          <div class="grp">Blancs</div>
+          <div><div class="dish"><span class="n">Côte Roannaise « La Passation »<span class="local">Local</span></span><span class="dots"></span><span class="p">18 €</span></div><div class="dish-d">Domaine des 7 Parcelles</div>
+          <div class="dish"><span class="n">Côte de Gascogne « Chambre d'amour » moelleux</span><span class="dots"></span><span class="p">18 €</span></div>
+          <div class="dish"><span class="n">Côte Roannaise « Émotion »<span class="local">Local</span></span><span class="dots"></span><span class="p">21 €</span></div><div class="dish-d">Domaine des 7 Parcelles</div>
+          <div class="dish"><span class="n">Italie « Pizzoato » Venezia</span><span class="dots"></span><span class="p">28 €</span></div></div>
+          <div><div class="dish"><span class="n">Mâcon « Les Fleurs Blanches » Verizet</span><span class="dots"></span><span class="p">28 €</span></div>
+          <div class="dish"><span class="n">Bourgogne « Montagny 1er Cru » Buissonnier</span><span class="dots"></span><span class="p">38 €</span></div>
+          <div class="dish"><span class="n">Sancerre « Château de Sancerre »</span><span class="dots"></span><span class="p">38 €</span></div>
+          <div class="dish"><span class="n">Châteauneuf-du-Pape « Clos l'Oratoire des Papes »</span><span class="dots"></span><span class="p">64 €</span></div></div>
+          <div class="grp">Rosés</div>
+          <div><div class="dish"><span class="n">Méditerranée « La Petite Note Bleue » HVE</span><span class="dots"></span><span class="p">21 €</span></div>
+          <div class="dish"><span class="n">Côte de Gascogne « Chambre d'amour » doux</span><span class="dots"></span><span class="p">24 €</span></div></div>
+          <div><div class="dish"><span class="n">Côte de Provence « Les Voiles » St-Tropez</span><span class="dots"></span><span class="p">29 €</span></div>
+          <div class="dish"><span class="n">Côte de Provence « Marafiance » Château Cavalier</span><span class="dots"></span><span class="p">34 €</span></div>
+          <div class="dish"><span class="n">Côte de Provence « Minuty Prestige »</span><span class="dots"></span><span class="p">34 €</span></div></div>
+        </div>
+      </details>
+
+      <details class="cave">
+        <summary>Bières &amp; spiritueux</summary>
+        <div class="body">
+          <div class="grp">Bières</div>
+          <div><div class="dish"><span class="n">Bière du moment — 25 cl / 50 cl</span><span class="dots"></span><span class="p">3,50 € / 7 €</span></div>
+          <div class="dish"><span class="n">Leffe — 25 cl / 50 cl</span><span class="dots"></span><span class="p">3,50 € / 7 €</span></div></div>
+          <div><div class="dish"><span class="n">Moretti — 25 cl / 50 cl</span><span class="dots"></span><span class="p">3,50 € / 7 €</span></div>
+          <div class="dish"><span class="n">Panaché · Monaco</span><span class="dots"></span><span class="p">3,50 €</span></div></div>
+          <div class="grp">Whiskies (4 cl)</div>
+          <div><div class="dish"><span class="n">Aberlour</span><span class="dots"></span><span class="p">10 €</span></div>
+          <div class="dish"><span class="n">Akashi</span><span class="dots"></span><span class="p">7 €</span></div>
+          <div class="dish"><span class="n">Ballantine's</span><span class="dots"></span><span class="p">7 €</span></div>
+          <div class="dish"><span class="n">Glann Armor</span><span class="dots"></span><span class="p">11 €</span></div>
+          <div class="dish"><span class="n">Glenfield 18</span><span class="dots"></span><span class="p">14 €</span></div></div>
+          <div><div class="dish"><span class="n">Jack Daniel's n°7 · Apple · Spice</span><span class="dots"></span><span class="p">8 €</span></div>
+          <div class="dish"><span class="n">Jim Beam</span><span class="dots"></span><span class="p">7 €</span></div>
+          <div class="dish"><span class="n">Mount Gay</span><span class="dots"></span><span class="p">8 €</span></div>
+          <div class="dish"><span class="n">Paddy</span><span class="dots"></span><span class="p">8 €</span></div>
+          <div class="dish"><span class="n">Toki</span><span class="dots"></span><span class="p">9 €</span></div></div>
+          <div class="grp">Vodkas (4 cl)</div>
+          <div><div class="dish"><span class="n">Beluga</span><span class="dots"></span><span class="p">10 €</span></div>
+          <div class="dish"><span class="n">Belvedere</span><span class="dots"></span><span class="p">10 €</span></div>
+          <div class="dish"><span class="n">Grey Goose</span><span class="dots"></span><span class="p">12 €</span></div></div>
+          <div><div class="dish"><span class="n">Purity</span><span class="dots"></span><span class="p">9 €</span></div>
+          <div class="dish"><span class="n">Fair</span><span class="dots"></span><span class="p">8 €</span></div>
+          <div class="dish"><span class="n">Zubrówka</span><span class="dots"></span><span class="p">7 €</span></div></div>
+          <div class="grp">Gins (4 cl)</div>
+          <div><div class="dish"><span class="n">Hendrick's</span><span class="dots"></span><span class="p">9 €</span></div>
+          <div class="dish"><span class="n">Bombay</span><span class="dots"></span><span class="p">8 €</span></div>
+          <div class="dish"><span class="n">The Botanist</span><span class="dots"></span><span class="p">10 €</span></div></div>
+          <div><div class="dish"><span class="n">Ki No Bi</span><span class="dots"></span><span class="p">12 €</span></div>
+          <div class="dish"><span class="n">Gin du moment</span><span class="dots"></span><span class="p">12 €</span></div></div>
+          <div class="grp">Rhums · tequila (4 cl)</div>
+          <div><div class="dish"><span class="n">Diplomatico</span><span class="dots"></span><span class="p">9 €</span></div>
+          <div class="dish"><span class="n">Don Papa Baroko</span><span class="dots"></span><span class="p">10 €</span></div></div>
+          <div><div class="dish"><span class="n">Don Julio</span><span class="dots"></span><span class="p">10 €</span></div></div>
+          <div class="grp">Digestifs</div>
+          <div><div class="dish"><span class="n">Get 27 · Get 31 · Limoncello · Manzana</span><span class="dots"></span><span class="p">6 €</span></div>
+          <div class="dish"><span class="n">Menthe Pastille · Verveine</span><span class="dots"></span><span class="p">6 €</span></div>
+          <div class="dish"><span class="n">Marc · Mirabelle · Poire</span><span class="dots"></span><span class="p">7 €</span></div></div>
+          <div><div class="dish"><span class="n">Bas-Armagnac · Cognac</span><span class="dots"></span><span class="p">9 €</span></div>
+          <div class="dish"><span class="n">Vieil Armagnac</span><span class="dots"></span><span class="p">12 €</span></div></div>
+        </div>
+      </details>
+
+      <details class="cave">
+        <summary>Softs &amp; boissons chaudes</summary>
+        <div class="body">
+          <div class="grp">Softs</div>
+          <div><div class="dish"><span class="n">Coca-Cola · Orangina · Oasis · Ice Tea · Perrier</span><span class="dots"></span><span class="p">3,50 €</span></div>
+          <div class="dish"><span class="n">Schweppes (agrume, lemon ou tonic)</span><span class="dots"></span><span class="p">3,50 €</span></div>
+          <div class="dish"><span class="n">Jus de fruits Bissardon 100 % pur jus (le verre)</span><span class="dots"></span><span class="p">3,50 €</span></div></div>
+          <div><div class="dish"><span class="n">Diabolo · Sirop à l'eau</span><span class="dots"></span><span class="p">3 €</span></div>
+          <div class="dish"><span class="n">Montarcher / Sparea 33 cl (plate ou pétillante)</span><span class="dots"></span><span class="p">3 €</span></div>
+          <div class="dish"><span class="n">Montarcher / Sparea 1 L (plate ou pétillante)</span><span class="dots"></span><span class="p">5 €</span></div></div>
+          <div class="grp">Boissons chaudes</div>
+          <div><div class="dish"><span class="n">Café « illy »</span><span class="dots"></span><span class="p">2 €</span></div>
+          <div class="dish"><span class="n">Café frappé</span><span class="dots"></span><span class="p">5 €</span></div></div>
+          <div><div class="dish"><span class="n">Thé · Infusion</span><span class="dots"></span><span class="p">3,50 €</span></div></div>
+        </div>
+      </details>
+    </div>
+    <p class="abuse center">L'abus d'alcool est dangereux pour la santé. À consommer avec modération.</p>
+  </div>
+</section>
+
+<!-- ============ GALERIE ============ -->
+<section class="light" id="galerie">
+  <div class="wrap">
+    <div class="center">
+      <span class="kicker">En images</span>
+      <h2 class="title">L'ambiance du Bô Passage</h2>
+      <div class="rule short"><i></i></div>
+    </div>
+    <div class="gal reveal">
+      <a href="img/salle-arcades.jpg" class="w"><img src="img/salle-arcades.jpg" alt="La salle et les arcades" loading="lazy"></a>
+      <a href="img/mojito.jpg" class="t"><img src="img/mojito.jpg" alt="Mojito, menthe fraîche" loading="lazy"></a>
+      <a href="img/champagne.jpg" class="t"><img src="img/champagne.jpg" alt="Champagne dans son seau" loading="lazy"></a>
+      <a href="img/planche.jpg"><img src="img/planche.jpg" alt="Planche charcuterie et fromages" loading="lazy"></a>
+      <a href="img/mur-art.jpg"><img src="img/mur-art.jpg" alt="Le mur d'affiches de la salle" loading="lazy"></a>
+      <a href="img/trio-cocktails.jpg" class="t"><img src="img/trio-cocktails.jpg" alt="Trois cocktails sous la lampe" loading="lazy"></a>
+      <a href="img/salle-soir.jpg" class="w"><img src="img/salle-soir.jpg" alt="La salle en soirée" loading="lazy"></a>
+      <a href="img/tajine-semoule.jpg"><img src="img/tajine-semoule.jpg" alt="Tajine et semoule maison" loading="lazy"></a>
+      <a href="img/bar-verres.jpg"><img src="img/bar-verres.jpg" alt="Les verres alignés derrière le bar" loading="lazy"></a>
+      <a href="img/entree-place.jpg" class="w"><img src="img/entree-place.jpg" alt="L'entrée et la vue sur la place" loading="lazy"></a>
+      <a href="img/espresso-table.jpg"><img src="img/espresso-table.jpg" alt="Espresso Martini sur la table" loading="lazy"></a>
+      <a href="img/salle-large.jpg"><img src="img/salle-large.jpg" alt="Vue d'ensemble de la salle" loading="lazy"></a>
+    </div>
+    <p class="center" style="margin-top:2rem"><a href="https://www.instagram.com/bo_passage_roanne/" target="_blank" rel="noopener" class="btn">Suivez-nous · @bo_passage_roanne</a></p>
+  </div>
+</section>
+
+<!-- ============ SOIRÉES & PRIVATISATION ============ -->
+<section class="light-2" id="evenements">
+  <div class="wrap">
+    <div class="center">
+      <span class="kicker">Les rendez-vous</span>
+      <h2 class="title">Soirées, brunch &amp; privatisation</h2>
+      <div class="rule short"><i></i></div>
+      <p class="lead">Chaque semaine a ses rendez-vous. Et pour vos grandes occasions, la maison est à vous.</p>
+    </div>
+    <div class="ev reveal">
+      <article>
+        <img src="img/trio-cocktails.jpg" alt="Cocktails du jeudi soir" loading="lazy">
+        <div class="b"><span class="kicker">Tous les jeudis · 19h – minuit</span><h3>Soirée DJ set</h3><p>Un DJ aux platines, cocktails et tapas jusque tard. Happy hour de 17h30 à 19h30 pour commencer en douceur. Entrée libre, les tables partent vite.</p><a href="tel:+33670004900">Réserver une table</a></div>
+      </article>
+      <article>
+        <img src="img/barmaid.jpg" alt="La scène ouverte du vendredi" loading="lazy">
+        <div class="b"><span class="kicker">Tous les vendredis · dès 20h</span><h3>Scène ouverte</h3><p>Musiciens, chanteurs, DJ, humoristes, slameurs : chaque vendredi, la scène est à vous. Programme des artistes retenus et inscriptions ci-dessous. Entrée libre.</p><a href="#scene-ouverte">Voir le programme · s'inscrire</a></div>
+      </article>
+      <article>
+        <img src="img/espresso-table.jpg" alt="Le brunch du dimanche" loading="lazy">
+        <div class="b"><span class="kicker">Dimanche · 9h – 16h</span><h3>Le brunch</h3><p>Sucré, salé, viennoiseries, œufs, jus frais et boissons chaudes. Uniquement sur réservation : pensez-y dès le vendredi.</p><a href="tel:+33670004900">Réserver le brunch</a></div>
+      </article>
+    </div>
+
+    <div class="privat reveal">
+      <img src="img/table-entre-amis.jpg" alt="Une table dressée pour une soirée entre amis" loading="lazy">
+      <div>
+        <span class="kicker">Événements</span>
+        <h2 class="title" style="font-size:clamp(1.8rem,3.6vw,2.5rem)">Privatisez le Bô Passage</h2>
+        <div class="rule left"><i></i></div>
+        <p class="lead">Anniversaire, pot de départ, repas de famille, séminaire ou afterwork d'entreprise : la salle se privatise, en totalité ou en partie, même en dehors des horaires d'ouverture.</p>
+        <ul>
+          <li>Cocktails et tapas sur mesure, plateaux marocains à partager</li>
+          <li>Formules déjeuner ou dîner pour les groupes</li>
+          <li>Deux salons distincts : la grande salle sous les arcades et le salon à la cheminée</li>
+          <li>Ambiance musicale, DJ sur demande</li>
+        </ul>
+        <a href="mailto:contact@bopassage.fr?subject=Demande%20de%20privatisation" class="btn solid">Demander un devis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCÈNE OUVERTE ============ -->
+<section class="dark" id="scene-ouverte">
+  <div class="wrap">
+    <div class="center">
+      <span class="kicker">Tous les vendredis soir</span>
+      <h2 class="title">La scène ouverte du Bô Passage</h2>
+      <div class="rule short"><i></i></div>
+      <p class="lead">Guitare-voix, groupe, DJ, stand-up, slam, magie… Chaque vendredi à partir de 20h, nous ouvrons la scène à ceux qui ont quelque chose à montrer. Vous proposez, on programme, le public applaudit.</p>
+    </div>
+
+    <div class="so-grid reveal">
+      <!-- PROGRAMME -->
+      <div>
+        <h3 class="so-h">Programme des prochaines scènes</h3>
+        <div class="rule left"><i></i></div>
+        <div id="programme" class="prog"></div>
+        <p class="so-note">Programmation mise à jour chaque semaine. Les artistes retenus sont prévenus par e-mail ou téléphone.</p>
+        <div class="so-how">
+          <h4>Comment ça marche</h4>
+          <ol>
+            <li>Vous remplissez le formulaire en indiquant ce que vous voulez faire.</li>
+            <li>On vous rappelle sous quelques jours pour caler une date.</li>
+            <li>Le vendredi, vous arrivez vers 19h pour les réglages ; passage de 15 à 30 minutes selon le nombre d'artistes.</li>
+            <li>Sono, micro et table de mixage sont sur place. Apportez votre instrument.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- FORMULAIRE -->
+      <div class="so-form">
+        <h3 class="so-h">Je veux monter sur scène</h3>
+        <div class="rule left"><i></i></div>
+        <form id="form-scene" name="scene-ouverte" method="POST" action="/" data-netlify="true" netlify-honeypot="site-web">
+          <input type="hidden" name="form-name" value="scene-ouverte">
+          <p class="hp"><label>Ne pas remplir <input name="site-web"></label></p>
+
+          <div class="row2">
+            <label>Nom et prénom *<input type="text" name="nom" required autocomplete="name"></label>
+            <label>Nom de scène / du groupe<input type="text" name="nom_de_scene"></label>
+          </div>
+          <div class="row2">
+            <label>E-mail *<input type="email" name="email" required autocomplete="email"></label>
+            <label>Téléphone *<input type="tel" name="telephone" required autocomplete="tel"></label>
+          </div>
+          <div class="row2">
+            <label>Type de prestation *
+              <select name="type" required>
+                <option value="">Choisir…</option>
+                <option>Musique live — solo</option>
+                <option>Musique live — duo / groupe</option>
+                <option>Chant / karaoké accompagné</option>
+                <option>DJ set</option>
+                <option>Stand-up / humour</option>
+                <option>Slam / poésie / lecture</option>
+                <option>Magie / mentalisme</option>
+                <option>Danse</option>
+                <option>Autre</option>
+              </select>
+            </label>
+            <label>Style / genre<input type="text" name="style" placeholder="Pop-folk, rap, jazz, impro…"></label>
+          </div>
+          <div class="row2">
+            <label>Nombre de personnes sur scène<input type="number" name="nb_personnes" min="1" max="10" value="1"></label>
+            <label>Durée souhaitée
+              <select name="duree">
+                <option>15 min</option><option selected>20 min</option><option>30 min</option><option>45 min</option>
+              </select>
+            </label>
+          </div>
+          <label>Décrivez ce que vous voulez faire *<textarea name="description" rows="4" required placeholder="Reprises ou compos, ambiance, besoins techniques (micros, ampli, prise jack…)"></textarea></label>
+          <div class="row2">
+            <label>Lien vers une vidéo ou un profil<input type="url" name="lien" placeholder="YouTube, Instagram, SoundCloud…"></label>
+            <label>Vendredis où vous êtes disponible<input type="text" name="disponibilites" placeholder="ex. 14 et 21 novembre, ou « tous »"></label>
+          </div>
+          <label class="chk"><input type="checkbox" name="consentement" required> J'accepte que le Bô Passage utilise ces informations pour me recontacter au sujet de la scène ouverte.</label>
+          <button type="submit" class="btn solid">Envoyer ma candidature</button>
+          <p class="so-note" id="form-msg">Réponse sous quelques jours. Vous pouvez aussi nous écrire à <a href="mailto:contact@bopassage.fr?subject=Scène%20ouverte">contact@bopassage.fr</a>.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HORAIRES & CONTACT ============ -->
+<section class="dark" id="contact">
+  <div class="wrap">
+    <div class="hc">
+      <div class="reveal">
+        <span class="kicker">Horaires</span>
+        <h2 class="title">Quand venir</h2>
+        <div class="rule left"><i></i></div>
+        <table class="hours" id="hours">
+          <tr data-d="1"><td>Lundi</td><td>9h – 22h30</td></tr>
+          <tr data-d="2"><td>Mardi</td><td>9h – 22h30</td></tr>
+          <tr data-d="3"><td>Mercredi</td><td>9h – 22h30</td></tr>
+          <tr data-d="4"><td>Jeudi</td><td>9h – 1h</td></tr>
+          <tr data-d="5"><td>Vendredi</td><td>9h – 1h</td></tr>
+          <tr data-d="6"><td>Samedi</td><td>9h – 1h</td></tr>
+          <tr data-d="0"><td>Dimanche</td><td>9h – 16h, brunch sur réservation</td></tr>
+        </table>
+        <p style="margin-top:1.2rem;font-style:italic;color:rgba(251,244,233,.75);font-size:.95rem">Happy hour tous les soirs de 17h30 à 19h30. Privatisation possible en dehors de ces horaires.</p>
+      </div>
+      <div class="reveal">
+        <span class="kicker">Contact &amp; réservation</span>
+        <h2 class="title">Nous trouver</h2>
+        <div class="rule left"><i></i></div>
+        <ul class="contact-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><b>Adresse</b><a href="https://maps.google.com/?q=17+Place+du+March%C3%A9+42300+Roanne" target="_blank" rel="noopener">17 place du Marché<br>42300 Roanne</a></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><div><b>Réservations</b><a href="tel:+33451249989">04 51 24 99 89</a><br><a href="tel:+33670004900">06 70 00 49 00</a></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg><div><b>E-mail</b><a href="mailto:contact@bopassage.fr">contact@bopassage.fr</a></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg><div><b>Instagram</b><a href="https://www.instagram.com/bo_passage_roanne/" target="_blank" rel="noopener">@bo_passage_roanne</a></div></li>
+        </ul>
+        <div class="map">
+          <iframe title="Plan — Bô Passage, 17 place du Marché, Roanne" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=17+Place+du+March%C3%A9,+42300+Roanne&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">Bô Passage</div>
+    <div class="tag">Bar · Tapas · Restaurant — Place du Marché, Roanne</div>
+    <nav class="f">
+      <a href="#maison">La maison</a><a href="#carte">La carte</a><a href="#bar">Bar</a><a href="#cave">Cave</a><a href="#galerie">Galerie</a><a href="#evenements">Soirées</a><a href="#scene-ouverte">Scène ouverte</a><a href="#contact">Contact</a><a href="#mentions">Mentions légales</a>
+    </nav>
+    <p>17 place du Marché · 42300 Roanne · <a href="tel:+33451249989">04 51 24 99 89</a> · <a href="mailto:contact@bopassage.fr">contact@bopassage.fr</a></p>
+    <small>© <span id="year">2026</span> Bô Passage — SAS Le Refuge Gourmand. L'abus d'alcool est dangereux pour la santé, à consommer avec modération. Photos non contractuelles.</small>
+  </div>
+</footer>
+
+<div id="mentions">
+  <div class="box">
+    <a href="#contact" class="close" aria-label="Fermer">×</a>
+    <h3>Mentions légales</h3>
+    <p><strong>Éditeur du site :</strong> SAS Le Refuge Gourmand, exploitant l'établissement « Bô Passage », 17 place du Marché, 42300 Roanne. Siège social : 854 chemin de Murat, 42155 Villemontais. Téléphone : 04 51 24 99 89. E-mail : contact@bopassage.fr.</p>
+    <p><strong>Directeur de la publication :</strong> le président de la SAS Le Refuge Gourmand.</p>
+    <p><strong>Hébergement :</strong> OVH SAS, 2 rue Kellermann, 59100 Roubaix, France.</p>
+    <p><strong>Données personnelles :</strong> ce site ne collecte aucune donnée personnelle et n'utilise aucun cookie de suivi. Les réservations s'effectuent par téléphone ou par e-mail.</p>
+    <p><strong>Crédits :</strong> photographies et création graphique © Bô Passage. Toute reproduction est interdite sans autorisation.</p>
+  </div>
+</div>
+
+<div class="lb" id="lb" onclick="closeLb()"><button aria-label="Fermer">×</button><img id="lbimg" src="" alt=""></div>
+
+<script>
+  function toggleNav(){const l=document.getElementById('links');const b=document.querySelector('.burger');const o=l.classList.toggle('open');b.setAttribute('aria-expanded',o)}
+  document.querySelectorAll('#links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('links').classList.remove('open')));
+
+  // ===== PROGRAMME SCÈNE OUVERTE =====
+  // À mettre à jour chaque semaine : une ligne par artiste retenu.
+  // date : "AAAA-MM-JJ" (un vendredi) · artiste : nom ou nom de scène · type : musique, DJ, stand-up, slam… · genre : précision libre
+  const PROGRAMME = [
+    // { date: "2026-11-14", artiste: "Nom de l'artiste", type: "Musique live", genre: "Guitare-voix, pop-folk" },
+    // { date: "2026-11-14", artiste: "Autre artiste",   type: "Stand-up",     genre: "20 min" },
+  ];
+  (function(){
+    const box=document.getElementById('programme');
+    const today=new Date();today.setHours(0,0,0,0);
+    const items=PROGRAMME.filter(p=>new Date(p.date+'T12:00:00')>=today).sort((a,b)=>a.date.localeCompare(b.date));
+    if(!items.length){box.innerHTML='<div class="empty">Programmation en cours — les premiers artistes seront annoncés ici. Candidatez dès maintenant !</div>';return}
+    const mois=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+    box.innerHTML=items.map(p=>{const d=new Date(p.date+'T12:00:00');
+      return `<div class="slot"><div class="d"><b>${d.getDate()}</b><span>${mois[d.getMonth()]}</span></div><div><div class="a">${p.artiste}</div><div class="g"><em>${p.type}</em>${p.genre||''}</div></div></div>`}).join('');
+  })();
+
+  // ===== FORMULAIRE SCÈNE OUVERTE =====
+  // Envoi via Netlify Forms (site hébergé sur Netlify) : les candidatures arrivent dans Netlify > Forms et par e-mail.
+  // Hors Netlify (ouverture du fichier en local, par ex.), repli : e-mail pré-rempli vers contact@bopassage.fr.
+  document.getElementById('form-scene').addEventListener('submit',async function(e){
+    e.preventDefault();
+    const f=this,msg=document.getElementById('form-msg'),wrap=f.closest('.so-form');
+    const d=new FormData(f);
+    const onNetlify=/^https?:$/.test(location.protocol)&&!/localhost|127\.0\.0\.1/.test(location.hostname);
+    if(!onNetlify){
+      const L=[];for(const [k,v] of d.entries()){if(k==='form-name'||k==='site-web'||!v)continue;L.push(k.replace(/_/g,' ')+' : '+v)}
+      location.href='mailto:contact@bopassage.fr?subject='+encodeURIComponent('Scène ouverte — candidature de '+(d.get('nom_de_scene')||d.get('nom')))+'&body='+encodeURIComponent(L.join('\n'));
+      msg.innerHTML='Votre messagerie s\'ouvre avec la candidature pré-remplie : il ne reste qu\'à cliquer sur Envoyer. Sinon, écrivez-nous à <a href="mailto:contact@bopassage.fr">contact@bopassage.fr</a>.';
+      return;
+    }
+    const btn=f.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Envoi…';
+    try{const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()});
+      if(r.ok){wrap.classList.add('sent');msg.innerHTML='<strong style="color:var(--or)">Merci !</strong> Votre candidature est bien envoyée. On vous rappelle sous quelques jours pour caler une date.';wrap.scrollIntoView({behavior:'smooth',block:'center'})}
+      else throw 0}
+    catch(_){btn.disabled=false;btn.textContent='Envoyer ma candidature';msg.innerHTML='Oups, l\'envoi a échoué. Écrivez-nous directement à <a href="mailto:contact@bopassage.fr">contact@bopassage.fr</a>.'}
+  });
+
+  // Lightbox
+  document.querySelectorAll('.gal a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.getElementById('lbimg').src=a.href;document.getElementById('lb').classList.add('on')}));
+  function closeLb(){document.getElementById('lb').classList.remove('on')}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
+
+  // Reveal on scroll
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Horaires du jour (heure de Paris)
+  (function(){
+    const H={1:[[9,0,22,30]],2:[[9,0,22,30]],3:[[9,0,22,30]],4:[[9,0,25,0]],5:[[9,0,25,0]],6:[[9,0,25,0]],0:[[9,0,16,0]]};
+    const now=new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Paris'}));
+    let d=now.getDay(),m=now.getHours()*60+now.getMinutes();
+    // après minuit : on reste sur la journée de la veille si elle finit tard
+    const pd=(d+6)%7;const prev=H[pd].slice(-1)[0];
+    if(m<5*60 && prev[2]*60+prev[3]>24*60){d=pd;m+=24*60}
+    document.querySelectorAll('#hours tr').forEach(tr=>{if(+tr.dataset.d===now.getDay())tr.classList.add('today')});
+    const f=(h,mi)=>(h%24)+'h'+(mi?String(mi).padStart(2,'0'):'');
+    let txt='',cls='closed';
+    for(const [h1,m1,h2,m2] of H[d]){const a=h1*60+m1,b=h2*60+m2;
+      if(m>=a&&m<b){txt='Ouvert · jusqu\'à '+f(h2,m2)+(d===0?' (brunch sur réservation)':'');cls='open';break}
+      if(m<a){txt='Fermé · ouverture à '+f(h1,m1);break}}
+    if(!txt)txt='Fermé · à demain';
+    const el=document.getElementById('today-status');el.textContent=txt;el.className=cls;
+    document.getElementById('year').textContent=now.getFullYear();
+  })();
+</script>
+</body>
+</html>
