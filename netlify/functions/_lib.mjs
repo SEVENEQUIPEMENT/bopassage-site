@@ -107,15 +107,17 @@ export async function participants(platform, cfg) {
   if (platform === "Instagram") {
     if (!cfg.igMediaId) throw new Error("Post concours Instagram non défini");
     const raw = await paginate(`${G}/${cfg.igMediaId}/comments?fields=username,text,timestamp&limit=100&access_token=${t}`);
-    list = raw.map(c => ({ id: c.username, name: "@" + c.username, text: c.text || "" }));
+    list = raw.filter(c => c.username !== cfg.igUsername).map(c => ({ id: c.username, name: "@" + c.username, text: c.text || "", tagged: /@[\w.]+/.test(c.text || "") }));
   } else {
     if (!cfg.fbPostId) throw new Error("Post concours Facebook non défini");
-    const raw = await paginate(`${G}/${cfg.fbPostId}/comments?fields=from{name,id},message,created_time&limit=100&filter=stream&access_token=${cfg.fbPageToken}`);
-    list = raw.filter(c => c.from && c.from.id !== cfg.fbPageId).map(c => ({ id: c.from.id, name: c.from.name, text: c.message || "" }));
+    const raw = await paginate(`${G}/${cfg.fbPostId}/comments?fields=from{name,id},message,message_tags,created_time&limit=100&filter=stream&access_token=${cfg.fbPageToken}`);
+    list = raw.filter(c => c.from && c.from.id !== cfg.fbPageId).map(c => ({ id: c.from.id, name: c.from.name, text: c.message || "", tagged: (c.message_tags || []).length > 0 }));
   }
-  if (cfg.requireTag) list = list.filter(p => /@/.test(p.text) || /\[\d+:/.test(p.text));
+  const total = list.length;
+  if (cfg.requireTag) list = list.filter(p => p.tagged);
   const seen = new Set(); const uniq = [];
   for (const p of list) { if (!seen.has(p.id)) { seen.add(p.id); uniq.push({ id: p.id, name: p.name }); } }
+  uniq.totalComments = total;
   return uniq;
 }
 
@@ -154,7 +156,7 @@ export async function sync({ force = false } = {}) {
           if ((counts[platform] ?? 0) < t.n) continue;
           try {
             const parts = await participants(platform, st.config);
-            if (parts.length < 2) { st.draws[key] = { pending: true, reason: "moins de 2 participants", at: counts.at }; continue; }
+            if (parts.length < 2) { st.draws[key] = { pending: true, reason: `${parts.totalComments || 0} commentaire(s) lu(s), ${parts.length} participant(s) valide(s) — il en faut au moins 2${st.config.requireTag ? " (option « ami tagué » active)" : ""}`, at: counts.at }; continue; }
             const idx = randomIndex(parts.length);
             const draw = { platform, tier: t.n, prize: t.title, sub: t.sub, at: new Date().toISOString(), followers: counts[platform],
               participants: parts.map(p => p.name), index: idx, winner: parts[idx], turns: 6 + randomIndex(3), posted: null };
