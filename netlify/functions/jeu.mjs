@@ -1,4 +1,4 @@
-import { loadState, saveState, sync, resolveIds, recentPosts, publishLaunch, tiersFor, PLATFORMS, LAUNCH_TEXTS } from "./_lib.mjs";
+import { loadState, saveState, sync, resolveIds, recentPosts, publishLaunch, tiersFor, PLATFORMS, LAUNCH_TEXTS, gget, gpost } from "./_lib.mjs";
 const J = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
 const pub = (st) => ({
   tiers: { Instagram: tiersFor("Instagram", st.config), Facebook: tiersFor("Facebook", st.config) }, platforms: PLATFORMS, counts: st.counts, lastError: st.lastError,
@@ -19,6 +19,37 @@ async function handle(req) {
   if (body.action === "reset-draw" && body.key) { delete st.draws[body.key]; await saveState(st); }
   if (body.action === "sync") { st = (await sync({ force: true })).state; }
   if (body.action === "posts") { await resolveIds(st.config); await saveState(st); const posts = await recentPosts(st.config); return J({ ok: true, posts }); }
+  if (body.action === "launch-fb") {
+    await resolveIds(st.config);
+    const img = "https://bopassage.fr/img/jeu/lancement-carre.jpg";
+    const fb = await gpost(`/${st.config.fbPageId}/photos`, { url: img, message: LAUNCH_TEXTS.Facebook }, st.config.fbPageToken);
+    st.config = { ...st.config, fbPostId: fb.post_id || fb.id };
+    for (const k of Object.keys(st.draws)) if (st.draws[k].pending && k.startsWith("Facebook")) delete st.draws[k];
+    await saveState(st);
+    return J({ ok: true, fbPostId: st.config.fbPostId, ...pub(st) });
+  }
+  if (body.action === "launch-ig") {
+    await resolveIds(st.config);
+    const img = "https://bopassage.fr/img/jeu/lancement-carre.jpg";
+    if (!st.config.igPendingContainer) {
+      const c = await gpost(`/${st.config.igUserId}/media`, { image_url: img, caption: LAUNCH_TEXTS.Instagram });
+      st.config.igPendingContainer = c.id; await saveState(st);
+    }
+    const t0 = Date.now();
+    while (Date.now() - t0 < 6000) {
+      const r = await gget(`/${st.config.igPendingContainer}`, { fields: "status_code,status" });
+      if (r.status_code === "FINISHED") {
+        const pmedia = await gpost(`/${st.config.igUserId}/media_publish`, { creation_id: st.config.igPendingContainer });
+        st.config = { ...st.config, igMediaId: pmedia.id, igPendingContainer: "" };
+        for (const k of Object.keys(st.draws)) if (st.draws[k].pending && k.startsWith("Instagram")) delete st.draws[k];
+        await saveState(st);
+        return J({ ok: true, done: true, igMediaId: pmedia.id, ...pub(st) });
+      }
+      if (r.status_code === "ERROR") { st.config.igPendingContainer = ""; await saveState(st); return J({ error: "Instagram a refusé l'image : " + (r.status || "") }, 500); }
+      await new Promise(r => setTimeout(r, 1500));
+    }
+    return J({ ok: true, done: false, message: "Instagram traite encore l'image…" });
+  }
   if (body.action === "publish-launch") {
     await resolveIds(st.config);
     const ids = await publishLaunch(st.config, body.texts || LAUNCH_TEXTS, body.opts || {});

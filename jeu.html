@@ -144,6 +144,7 @@ label.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:8px 0}
         <button class="btn sm" id="sync">🔄 Synchroniser maintenant</button>
         <button class="btn ghost sm" id="loadposts">Choisir les posts concours</button>
         <button class="btn ghost sm" id="republish">📣 Publier le post de lancement (FB + Insta)</button>
+        <button class="btn ghost sm" id="republish-ig">Instagram seulement</button>
       </div>
       <div id="posts"></div>
       <h2 style="margin-top:16px">Paliers (4 seuils, dans l'ordre des lots)</h2>
@@ -258,7 +259,8 @@ $('#loadposts').onclick=async()=>{$('#posts').innerHTML='<div class="muted">Char
   $('#posts').innerHTML=h+'<div class="row"><button class="btn sm" id="saveposts">Valider ces posts</button></div>';
   $('#saveposts').onclick=async()=>{const ig=document.querySelector('input[name=Instagram]:checked')?.value||'',fb=document.querySelector('input[name=Facebook]:checked')?.value||'';const r=await post({action:'config',config:{igMediaId:ig,fbPostId:fb}});S=r;render();toast('Posts enregistrés');};
  }catch(e){$('#posts').innerHTML='<div class="err">'+e.message+'</div>'}};
-$('#republish').onclick=async()=>{if(!confirm('Publier maintenant le post de lancement sur Facebook ET Instagram, et le définir comme post concours ?'))return;$('#republish').disabled=true;try{const r=await post({action:'publish-launch'});S=r;render();toast('Publié sur les deux réseaux');}catch(e){$('#adm-err').textContent=e.message}$('#republish').disabled=false;};
+$('#republish').onclick=async()=>{if(!confirm('Publier maintenant le post de lancement sur Facebook ET Instagram, et le définir comme post concours ?'))return;$('#republish').disabled=true;$('#adm-err').textContent='';try{toast('Publication Facebook…');const a=await post({action:'launch-fb'});S=a;render();toast('Facebook publié ✔ — Instagram en cours…');let r;for(let i=0;i<10;i++){r=await post({action:'launch-ig'});if(r.done)break;toast('Instagram traite l\'image… ('+(i+1)+')');}if(r&&r.done){S=r;render();toast('Publié sur les deux réseaux ✔');}else $('#adm-err').textContent='Instagram n\'a pas fini : reclique sur le bouton dans 1 minute (Facebook est déjà publié, il ne sera pas dupliqué si tu réponds Annuler puis relances uniquement Instagram ci-dessous).';}catch(e){$('#adm-err').textContent=e.message}$('#republish').disabled=false;};
+$('#republish-ig').onclick=async()=>{$('#adm-err').textContent='';try{let r;for(let i=0;i<10;i++){r=await post({action:'launch-ig'});if(r.done)break;toast('Instagram traite l\'image… ('+(i+1)+')');}if(r&&r.done){S=r;render();toast('Instagram publié ✔');}else $('#adm-err').textContent='Instagram n\'a pas fini, réessaie dans 1 minute.';}catch(e){$('#adm-err').textContent=e.message}};
 $('#saveconf').onclick=async()=>{try{const r=await post({action:'config',config:{enabled:$('#c-enabled').checked,autoPost:$('#c-autoPost').checked,requireTag:$('#c-requireTag').checked,tiers:{Instagram:$('#t-ig').value.split(',').map(Number).filter(Boolean),Facebook:$('#t-fb').value.split(',').map(Number).filter(Boolean)}}});S=r;render();toast('Enregistré');}catch(e){$('#adm-err').textContent=e.message}};
 $('#resetdraw').onclick=async()=>{const k=$('#resetkey').value;if(!k||k==='—')return;try{const r=await post({action:'reset-draw',key:k});S=r;render();toast('Tirage annulé — il sera refait à la prochaine synchro');}catch(e){$('#adm-err').textContent=e.message}};
 
