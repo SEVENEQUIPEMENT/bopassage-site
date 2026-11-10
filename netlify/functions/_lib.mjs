@@ -1,10 +1,10 @@
 import { getStore } from "@netlify/blobs";
 
 export const TIERS = [
-  { n: 300,  title: "Apéritif pour deux",            sub: "valeur 24 €" },
-  { n: 500,  title: "Planche Découverte",            sub: "valeur 25 €" },
+  { n: 300,  title: "Apéritif pour deux",            sub: "cocktails ou verres de vin + tapas" },
+  { n: 500,  title: "Planche Découverte",            sub: "à partager" },
   { n: 700,  title: "Bouteille de Rosé pétillant",   sub: "Domaine des 7 Parcelles · à partager entre ami(e)s" },
-  { n: 1000, title: "Repas pour deux",               sub: "valeur 52 €" },
+  { n: 1000, title: "Repas pour deux",               sub: "entrée, plat, dessert" },
 ];
 export const PLATFORMS = ["Instagram", "Facebook"];
 export const DEFAULT_TIERS = { Instagram: [300, 500, 700, 1000], Facebook: [500, 700, 1000, 1200] };
@@ -197,3 +197,48 @@ export async function publishLaunch(cfg, texts, opts = {}) {
   if (!opts.skipInstagram) out.igMediaId = await igPublish(cfg, img, texts.Instagram);
   return out;
 }
+
+export const LAUNCH_TEXTS = {
+  Instagram: `🎁 GRAND JEU FOLLOWERS — 4 LOTS À GAGNER 🎁
+
+Pour fêter notre communauté qui grandit, on vous gâte ! À chaque palier d'abonnés atteint, un tirage au sort automatique parmi vos commentaires :
+
+🥂 300 abonnés → Apéritif pour deux
+🧀 500 abonnés → Planche Découverte à partager
+🍾 700 abonnés → Bouteille de Rosé pétillant du Domaine des 7 Parcelles, à partager entre ami(e)s
+🍽️ 1000 abonnés → Repas pour deux
+
+Pour participer :
+1️⃣ Abonne-toi à @bo_passage_roanne
+2️⃣ Commente ce post en taguant un(e) ami(e)
+3️⃣ Partage en story pour que tes amis gagnent aussi 💛
+
+Le tirage est fait par une machine, enregistré et rejouable en vidéo sur 👉 bopassage.fr/jeu (lien en bio). Les gagnants sont annoncés ici.
+
+L'équipe de Bô Passage vous attend ! 🏛️
+📍 17 Place du Marché, Roanne
+
+Jeu gratuit sans obligation d'achat, réservé aux majeurs. Instagram n'est ni organisateur ni parrain de ce jeu. L'abus d'alcool est dangereux pour la santé.
+
+#BôPassage #Roanne #JeuConcours #Concours #Giveaway #RoanneRestaurant #PlaceDuMarché #Loire`,
+  Facebook: `🎁 GRAND JEU FOLLOWERS — 4 LOTS À GAGNER 🎁
+
+Vous êtes déjà 500 à nous suivre, merci ! Pour vous remercier, à chaque palier d'abonnés de la page, un tirage au sort automatique parmi vos commentaires :
+
+🥂 500 abonnés → Apéritif pour deux
+🧀 700 abonnés → Planche Découverte à partager
+🍾 1000 abonnés → Bouteille de Rosé pétillant du Domaine des 7 Parcelles, à partager entre ami(e)s
+🍽️ 1200 abonnés → Repas pour deux
+
+Pour participer :
+1️⃣ Abonnez-vous à la page Bô Passage Roanne
+2️⃣ Commentez cette publication en taguant un(e) ami(e)
+3️⃣ Invitez vos amis à suivre la page pour qu'ils gagnent eux aussi 💛
+
+Tirage automatique, enregistré et rejouable en vidéo sur 👉 https://bopassage.fr/jeu — les gagnants sont annoncés ici et doivent nous écrire en message privé.
+
+L'équipe de Bô Passage vous attend ! 🏛️
+📍 17 Place du Marché, Roanne · 04 51 24 99 89
+
+Jeu gratuit sans obligation d'achat, réservé aux majeurs. Facebook n'est ni organisateur ni parrain de ce jeu. L'abus d'alcool est dangereux pour la santé.`
+};
