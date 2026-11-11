@@ -104,14 +104,18 @@ async function paginate(first) {
 export async function participants(platform, cfg) {
   const t = token();
   let list = [];
-  if (platform === "Instagram") {
-    if (!cfg.igMediaId) throw new Error("Post concours Instagram non défini");
-    const raw = await paginate(`${G}/${cfg.igMediaId}/comments?fields=username,text,timestamp&limit=100&access_token=${t}`);
-    list = raw.filter(c => c.username !== cfg.igUsername).map(c => ({ id: c.username, name: "@" + c.username, text: c.text || "", tagged: /@[\w.]+/.test(c.text || "") }));
-  } else {
-    if (!cfg.fbPostId) throw new Error("Post concours Facebook non défini");
-    const raw = await paginate(`${G}/${cfg.fbPostId}/comments?fields=from{name,id},message,message_tags,created_time&limit=100&filter=stream&access_token=${cfg.fbPageToken}`);
-    list = raw.filter(c => c.from && c.from.id !== cfg.fbPageId).map(c => ({ id: c.from.id, name: c.from.name, text: c.message || "", tagged: (c.message_tags || []).length > 0 }));
+  const ids = platform === "Instagram"
+    ? [...new Set([...(cfg.igMediaIds || []), ...(cfg.igMediaId ? [cfg.igMediaId] : [])])]
+    : [...new Set([...(cfg.fbPostIds || []), ...(cfg.fbPostId ? [cfg.fbPostId] : [])])];
+  if (!ids.length) throw new Error(`Post concours ${platform} non défini`);
+  for (const id of ids) {
+    if (platform === "Instagram") {
+      const raw = await paginate(`${G}/${id}/comments?fields=username,text,timestamp&limit=100&access_token=${t}`);
+      list.push(...raw.filter(c => c.username !== cfg.igUsername).map(c => ({ id: c.username, name: "@" + c.username, text: c.text || "", tagged: /@[\w.]+/.test(c.text || "") })));
+    } else {
+      const raw = await paginate(`${G}/${id}/comments?fields=from{name,id},message,message_tags,created_time&limit=100&filter=stream&access_token=${cfg.fbPageToken}`);
+      list.push(...raw.filter(c => c.from && c.from.id !== cfg.fbPageId).map(c => ({ id: c.from.id, name: c.from.name, text: c.message || "", tagged: (c.message_tags || []).length > 0 })));
+    }
   }
   const total = list.length;
   if (cfg.requireTag) list = list.filter(p => p.tagged);
@@ -120,7 +124,6 @@ export async function participants(platform, cfg) {
   uniq.totalComments = total;
   return uniq;
 }
-
 export function randomIndex(n) {
   const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] % n;
 }

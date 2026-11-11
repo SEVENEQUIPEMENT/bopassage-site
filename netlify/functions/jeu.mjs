@@ -4,7 +4,7 @@ const pub = (st) => ({
   tiers: { Instagram: tiersFor("Instagram", st.config), Facebook: tiersFor("Facebook", st.config) }, platforms: PLATFORMS, counts: st.counts, lastError: st.lastError,
   log: st.log.slice(-200),
   draws: Object.fromEntries(Object.entries(st.draws).map(([k, d]) => [k, d.pending ? { pending: true, reason: d.reason } : { ...d, participants: d.participants, winner: { name: d.winner.name } }])),
-  config: { autoPost: st.config.autoPost, requireTag: st.config.requireTag, enabled: st.config.enabled, igMediaId: st.config.igMediaId || "", fbPostId: st.config.fbPostId || "", igUsername: st.config.igUsername, fbPageName: st.config.fbPageName, tiers: st.config.tiers },
+  config: { autoPost: st.config.autoPost, requireTag: st.config.requireTag, enabled: st.config.enabled, igMediaId: st.config.igMediaId || "", fbPostId: st.config.fbPostId || "", igMediaIds: st.config.igMediaIds || [], fbPostIds: st.config.fbPostIds || [], igUsername: st.config.igUsername, fbPageName: st.config.fbPageName, tiers: st.config.tiers },
 });
 export default async (req) => {
   try { return await handle(req); } catch (e) { return J({ error: e.message }, 500); }
@@ -23,7 +23,7 @@ async function handle(req) {
     await resolveIds(st.config);
     const img = "https://bopassage.fr/img/jeu/lancement-carre.jpg";
     const fb = await gpost(`/${st.config.fbPageId}/photos`, { url: img, message: LAUNCH_TEXTS.Facebook }, st.config.fbPageToken);
-    st.config = { ...st.config, fbPostId: fb.post_id || fb.id };
+    st.config = { ...st.config, fbPostId: fb.post_id || fb.id, fbPostIds: [...new Set([...(st.config.fbPostIds || []), fb.post_id || fb.id])] };
     for (const k of Object.keys(st.draws)) if (st.draws[k].pending && k.startsWith("Facebook")) delete st.draws[k];
     await saveState(st);
     return J({ ok: true, fbPostId: st.config.fbPostId, ...pub(st) });
@@ -40,7 +40,7 @@ async function handle(req) {
       const r = await gget(`/${st.config.igPendingContainer}`, { fields: "status_code,status" });
       if (r.status_code === "FINISHED") {
         const pmedia = await gpost(`/${st.config.igUserId}/media_publish`, { creation_id: st.config.igPendingContainer });
-        st.config = { ...st.config, igMediaId: pmedia.id, igPendingContainer: "" };
+        st.config = { ...st.config, igMediaId: pmedia.id, igMediaIds: [...new Set([...(st.config.igMediaIds || []), pmedia.id])], igPendingContainer: "" };
         for (const k of Object.keys(st.draws)) if (st.draws[k].pending && k.startsWith("Instagram")) delete st.draws[k];
         await saveState(st);
         return J({ ok: true, done: true, igMediaId: pmedia.id, ...pub(st) });
