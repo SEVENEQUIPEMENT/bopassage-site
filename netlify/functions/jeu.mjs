@@ -19,6 +19,30 @@ async function handle(req) {
   if (body.action === "reset-draw" && body.key) { delete st.draws[body.key]; await saveState(st); }
   if (body.action === "sync") { st = (await sync({ force: true })).state; }
   if (body.action === "posts") { await resolveIds(st.config); await saveState(st); const posts = await recentPosts(st.config); return J({ ok: true, posts }); }
+  if (body.action === "post-fb") {
+    await resolveIds(st.config);
+    const fb = await gpost(`/${st.config.fbPageId}/photos`, { url: body.image, message: body.text || "" }, st.config.fbPageToken);
+    return J({ ok: true, fbPostId: fb.post_id || fb.id });
+  }
+  if (body.action === "post-ig") {
+    await resolveIds(st.config);
+    if (!st.config.igPendingCustom) {
+      const c = await gpost(`/${st.config.igUserId}/media`, { image_url: body.image, caption: body.text || "" });
+      st.config.igPendingCustom = c.id; await saveState(st);
+    }
+    const t0 = Date.now();
+    while (Date.now() - t0 < 6000) {
+      const r = await gget(`/${st.config.igPendingCustom}`, { fields: "status_code,status" });
+      if (r.status_code === "FINISHED") {
+        const pm = await gpost(`/${st.config.igUserId}/media_publish`, { creation_id: st.config.igPendingCustom });
+        st.config.igPendingCustom = ""; await saveState(st);
+        return J({ ok: true, done: true, igMediaId: pm.id });
+      }
+      if (r.status_code === "ERROR") { st.config.igPendingCustom = ""; await saveState(st); return J({ error: "Instagram a refusé l'image : " + (r.status || "") }, 500); }
+      await new Promise(r => setTimeout(r, 1500));
+    }
+    return J({ ok: true, done: false });
+  }
   if (body.action === "launch-fb") {
     await resolveIds(st.config);
     const img = "https://bopassage.fr/img/jeu/lancement-carre.jpg";

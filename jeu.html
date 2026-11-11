@@ -71,7 +71,7 @@ body.live main{grid-template-columns:1fr;max-width:760px;padding-top:30px}
 body.live .stage{border:0;background:transparent}
 .admin{display:none}
 body.adminmode .admin{display:block}
-input[type=password],input[type=text],select{background:rgba(0,0,0,.25);border:1px solid rgba(210,176,107,.4);color:var(--ivoire);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:15px;width:100%}
+textarea,input[type=password],input[type=text],select{background:rgba(0,0,0,.25);border:1px solid rgba(210,176,107,.4);color:var(--ivoire);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:15px;width:100%}
 label.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:8px 0}
 .postlist{display:grid;gap:6px;max-height:260px;overflow:auto;margin:6px 0}
 .post{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;font-size:13px;padding:6px 8px;border:1px solid rgba(210,176,107,.2);border-radius:8px}
@@ -153,6 +153,12 @@ label.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:8px 0}
       <label class="chk"><input type="checkbox" id="c-autoPost"> Publier automatiquement le gagnant sur Instagram + Facebook</label>
       <label class="chk"><input type="checkbox" id="c-requireTag"> Exiger un(e) ami(e) tagué(e) dans le commentaire</label>
       <div class="row"><button class="btn sm" id="saveconf">Enregistrer</button></div>
+      <h2 style="margin-top:16px">Publier une publication (FB + Insta)</h2>
+      <div class="row"><button class="btn ghost sm" id="loaddraft" data-draft="80s">Charger le brouillon « Soirée 80's »</button></div>
+      <label>Image (URL sur bopassage.fr)</label><input type="text" id="p-img" placeholder="https://bopassage.fr/img/...">
+      <label>Texte Facebook</label><textarea id="p-fb" style="min-height:120px"></textarea>
+      <label>Texte Instagram</label><textarea id="p-ig" style="min-height:120px"></textarea>
+      <div class="row"><label class="chk"><input type="checkbox" id="p-dofb" checked> Facebook</label><label class="chk"><input type="checkbox" id="p-doig" checked> Instagram</label><button class="btn sm" id="p-go">📣 Publier</button></div>
       <h2 style="margin-top:16px">Annuler un tirage</h2>
       <div class="row"><select id="resetkey" style="max-width:320px"></select><button class="btn ghost sm" id="resetdraw">Annuler et retirer</button></div>
       <div class="err" id="adm-err"></div>
@@ -261,6 +267,8 @@ $('#loadposts').onclick=async()=>{$('#posts').innerHTML='<div class="muted">Char
  }catch(e){$('#posts').innerHTML='<div class="err">'+e.message+'</div>'}};
 $('#republish').onclick=async()=>{if(!confirm('Publier maintenant le post de lancement sur Facebook ET Instagram, et le définir comme post concours ?'))return;$('#republish').disabled=true;$('#adm-err').textContent='';try{toast('Publication Facebook…');const a=await post({action:'launch-fb'});S=a;render();toast('Facebook publié ✔ — Instagram en cours…');let r;for(let i=0;i<10;i++){r=await post({action:'launch-ig'});if(r.done)break;toast('Instagram traite l\'image… ('+(i+1)+')');}if(r&&r.done){S=r;render();toast('Publié sur les deux réseaux ✔');}else $('#adm-err').textContent='Instagram n\'a pas fini : reclique sur le bouton dans 1 minute (Facebook est déjà publié, il ne sera pas dupliqué si tu réponds Annuler puis relances uniquement Instagram ci-dessous).';}catch(e){$('#adm-err').textContent=e.message}$('#republish').disabled=false;};
 $('#republish-ig').onclick=async()=>{$('#adm-err').textContent='';try{let r;for(let i=0;i<10;i++){r=await post({action:'launch-ig'});if(r.done)break;toast('Instagram traite l\'image… ('+(i+1)+')');}if(r&&r.done){S=r;render();toast('Instagram publié ✔');}else $('#adm-err').textContent='Instagram n\'a pas fini, réessaie dans 1 minute.';}catch(e){$('#adm-err').textContent=e.message}};
+$('#loaddraft').onclick=async()=>{try{const d=await (await fetch('/drafts/'+$('#loaddraft').dataset.draft+'.json',{cache:'no-store'})).json();$('#p-img').value=d.image;$('#p-fb').value=d.Facebook;$('#p-ig').value=d.Instagram;toast('Brouillon chargé');}catch(e){$('#adm-err').textContent='Brouillon introuvable'}};
+$('#p-go').onclick=async()=>{const img=$('#p-img').value.trim();if(!img){$('#adm-err').textContent='Image manquante';return;}if(!confirm('Publier maintenant sur '+($('#p-dofb').checked?'Facebook ':'')+($('#p-doig').checked?'Instagram':'')+' ?'))return;$('#p-go').disabled=true;$('#adm-err').textContent='';try{if($('#p-dofb').checked){await post({action:'post-fb',image:img,text:$('#p-fb').value});toast('Facebook publié ✔');}if($('#p-doig').checked){let r;for(let i=0;i<10;i++){r=await post({action:'post-ig',image:img,text:$('#p-ig').value});if(r.done)break;toast('Instagram traite l\'image… ('+(i+1)+')');}if(r&&r.done)toast('Instagram publié ✔');else $('#adm-err').textContent='Instagram n\'a pas fini : reclique Publier avec Facebook décoché.';}}catch(e){$('#adm-err').textContent=e.message}$('#p-go').disabled=false;};
 $('#saveconf').onclick=async()=>{try{const r=await post({action:'config',config:{enabled:$('#c-enabled').checked,autoPost:$('#c-autoPost').checked,requireTag:$('#c-requireTag').checked,tiers:{Instagram:$('#t-ig').value.split(',').map(Number).filter(Boolean),Facebook:$('#t-fb').value.split(',').map(Number).filter(Boolean)}}});S=r;render();toast('Enregistré');}catch(e){$('#adm-err').textContent=e.message}};
 $('#resetdraw').onclick=async()=>{const k=$('#resetkey').value;if(!k||k==='—')return;try{const r=await post({action:'reset-draw',key:k});S=r;render();toast('Tirage annulé — il sera refait à la prochaine synchro');}catch(e){$('#adm-err').textContent=e.message}};
 
