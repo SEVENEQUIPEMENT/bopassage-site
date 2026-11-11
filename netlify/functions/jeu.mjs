@@ -3,7 +3,7 @@ const J = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: 
 const pub = (st) => ({
   tiers: { Instagram: tiersFor("Instagram", st.config), Facebook: tiersFor("Facebook", st.config) }, platforms: PLATFORMS, counts: st.counts, lastError: st.lastError,
   log: st.log.slice(-200),
-  draws: Object.fromEntries(Object.entries(st.draws).map(([k, d]) => [k, d.pending ? { pending: true, reason: d.reason } : { ...d, participants: d.participants, winner: { name: d.winner.name } }])),
+  draws: Object.fromEntries(Object.entries(st.draws).map(([k, d]) => [k, d.pending ? { pending: true, reason: d.reason } : { ...d, participants: d.participants, winner: { name: d.winner.name, permalink: d.winner.permalink || "" } }])),
   config: { autoPost: st.config.autoPost, requireTag: st.config.requireTag, enabled: st.config.enabled, igMediaId: st.config.igMediaId || "", fbPostId: st.config.fbPostId || "", igMediaIds: st.config.igMediaIds || [], fbPostIds: st.config.fbPostIds || [], manual: st.config.manual || { Instagram: [], Facebook: [] }, igUsername: st.config.igUsername, fbPageName: st.config.fbPageName, tiers: st.config.tiers },
 });
 export default async (req) => {

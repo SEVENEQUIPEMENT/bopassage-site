@@ -110,22 +110,32 @@ export async function participants(platform, cfg) {
   if (!ids.length) throw new Error(`Post concours ${platform} non défini`);
   for (const id of ids) {
     if (platform === "Instagram") {
-      const raw = await paginate(`${G}/${id}/comments?fields=username,text,timestamp&limit=100&access_token=${t}`);
-      list.push(...raw.filter(c => c.username !== cfg.igUsername).map(c => ({ id: c.username, name: "@" + c.username, text: c.text || "", tagged: /@[\w.]+/.test(c.text || "") })));
+      const raw = await paginate(`${G}/${id}/comments?fields=id,username,text,timestamp&limit=100&access_token=${t}`);
+      for (const c of raw) {
+        if (c.username && c.username === cfg.igUsername) continue;
+        const known = !!c.username;
+        list.push({ id: known ? "u:" + c.username : "c:" + c.id, name: known ? "@" + c.username : "Commentaire n°" + c.id.slice(-6),
+          commentId: c.id, known, text: c.text || "", tagged: /@[\w.]+/.test(c.text || "") });
+      }
     } else {
-      const raw = await paginate(`${G}/${id}/comments?fields=from{name,id},message,message_tags,created_time&limit=100&filter=stream&access_token=${cfg.fbPageToken}`);
-      list.push(...raw.filter(c => c.from && c.from.id !== cfg.fbPageId).map(c => ({ id: c.from.id, name: c.from.name, text: c.message || "", tagged: (c.message_tags || []).length > 0 })));
+      const raw = await paginate(`${G}/${id}/comments?fields=id,from{name,id},message,message_tags,permalink_url,created_time&limit=100&filter=stream&access_token=${cfg.fbPageToken}`);
+      for (const c of raw) {
+        if (c.from && c.from.id === cfg.fbPageId) continue;
+        const known = !!(c.from && c.from.name);
+        list.push({ id: known ? "u:" + c.from.id : "c:" + c.id, name: known ? c.from.name : "Commentaire n°" + c.id.slice(-6),
+          commentId: c.id, permalink: c.permalink_url || "", known, text: c.message || "", tagged: (c.message_tags || []).length > 0 });
+      }
     }
   }
-  // participants saisis à la main (liste collée dans l'admin), fusionnés avec ceux lus par l'API
+  // participants saisis à la main (optionnel), fusionnés sans doublon
   const manual = ((cfg.manual && cfg.manual[platform]) || []).map(n => n.trim()).filter(Boolean)
-    .map(n => ({ id: "m:" + n.toLowerCase().replace(/^@/, ""), name: platform === "Instagram" && !n.startsWith("@") ? "@" + n : n, text: "", tagged: true }));
+    .map(n => ({ id: "m:" + n.toLowerCase().replace(/^@/, ""), name: platform === "Instagram" && !n.startsWith("@") ? "@" + n : n, known: true, text: "", tagged: true }));
   const apiNames = new Set(list.map(p => p.name.toLowerCase().replace(/^@/, "")));
   for (const m of manual) if (!apiNames.has(m.name.toLowerCase().replace(/^@/, ""))) list.push(m);
   const total = list.length;
-  if (cfg.requireTag) list = list.filter(p => p.tagged);
+  if (cfg.requireTag) list = list.filter(p => p.tagged || !p.known);
   const seen = new Set(); const uniq = [];
-  for (const p of list) { if (!seen.has(p.id)) { seen.add(p.id); uniq.push({ id: p.id, name: p.name }); } }
+  for (const p of list) { if (!seen.has(p.id)) { seen.add(p.id); uniq.push({ id: p.id, name: p.name, commentId: p.commentId || "", permalink: p.permalink || "", known: p.known }); } }
   uniq.totalComments = total;
   return uniq;
 }
@@ -133,9 +143,16 @@ export function randomIndex(n) {
   const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] % n;
 }
 
+export async function replyWinner(platform, winner, tierTitle, cfg) {
+  if (!winner.commentId) return null;
+  const txt = `🎉 Félicitations, votre commentaire a été tiré au sort : vous remportez ${tierTitle} au Bô Passage ! Écrivez-nous en message privé pour récupérer votre lot. Tirage vérifiable sur bopassage.fr/jeu`;
+  if (platform === "Facebook") { const r = await gpost(`/${winner.commentId}/comments`, { message: txt }, cfg.fbPageToken); return r.id; }
+  const r = await gpost(`/${winner.commentId}/replies`, { message: txt }); return r.id;
+}
 export async function publishWinner(platform, tier, winner, cfg) {
   const t = tiersFor(platform, cfg).find(x => x.n === tier);
-  const msg = `🎉 Palier ${tier} abonnés atteint sur ${platform} ! Bravo ${winner.name}, tu remportes : ${t.title} (${t.sub}) au Bô Passage. Envoie-nous un message privé pour récupérer ton lot.\n\nMerci à tous les participants — le jeu continue jusqu'à 1000 abonnés, l'équipe de Bô Passage vous attend ! 🥂\n👉 Tirage vérifiable sur https://bopassage.fr/jeu`;
+  const who = winner.known ? `Bravo ${winner.name}, tu remportes` : `Le commentaire gagnant a été tiré au sort (son auteur est prévenu en réponse à son commentaire${winner.permalink ? " : " + winner.permalink : ""}) et remporte`;
+  const msg = `🎉 Palier ${tier} abonnés atteint sur ${platform} ! ${who} : ${t.title} (${t.sub}) au Bô Passage. Envoie-nous un message privé pour récupérer ton lot.\n\nMerci à tous les participants — le jeu continue, l'équipe de Bô Passage vous attend ! 🥂\n👉 Tirage vérifiable sur https://bopassage.fr/jeu`;
   if (platform === "Facebook") {
     const r = await gpost(`/${cfg.fbPageId}/feed`, { message: msg, link: "https://bopassage.fr/jeu" }, cfg.fbPageToken);
     return r.id;
@@ -167,8 +184,9 @@ export async function sync({ force = false } = {}) {
             if (parts.length < 2) { st.draws[key] = { pending: true, reason: `${parts.totalComments || 0} commentaire(s) lu(s), ${parts.length} participant(s) valide(s) — il en faut au moins 2${st.config.requireTag ? " (option « ami tagué » active)" : ""}`, at: counts.at }; continue; }
             const idx = randomIndex(parts.length);
             const draw = { platform, tier: t.n, prize: t.title, sub: t.sub, at: new Date().toISOString(), followers: counts[platform],
-              participants: parts.map(p => p.name), index: idx, winner: parts[idx], turns: 6 + randomIndex(3), posted: null };
+              participants: parts.map(p => p.name), index: idx, winner: { name: parts[idx].name, commentId: parts[idx].commentId, permalink: parts[idx].permalink, known: parts[idx].known }, turns: 6 + randomIndex(3), posted: null };
             if (st.config.autoPost !== false) {
+              try { draw.replied = await replyWinner(platform, parts[idx], t.title, st.config); } catch (e) { draw.replyError = e.message; }
               try { draw.posted = await publishWinner(platform, t.n, parts[idx], st.config); } catch (e) { draw.postError = e.message; }
             }
             st.draws[key] = draw; news.push(draw);
