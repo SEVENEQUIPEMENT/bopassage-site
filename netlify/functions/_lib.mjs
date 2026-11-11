@@ -117,6 +117,11 @@ export async function participants(platform, cfg) {
       list.push(...raw.filter(c => c.from && c.from.id !== cfg.fbPageId).map(c => ({ id: c.from.id, name: c.from.name, text: c.message || "", tagged: (c.message_tags || []).length > 0 })));
     }
   }
+  // participants saisis à la main (liste collée dans l'admin), fusionnés avec ceux lus par l'API
+  const manual = ((cfg.manual && cfg.manual[platform]) || []).map(n => n.trim()).filter(Boolean)
+    .map(n => ({ id: "m:" + n.toLowerCase().replace(/^@/, ""), name: platform === "Instagram" && !n.startsWith("@") ? "@" + n : n, text: "", tagged: true }));
+  const apiNames = new Set(list.map(p => p.name.toLowerCase().replace(/^@/, "")));
+  for (const m of manual) if (!apiNames.has(m.name.toLowerCase().replace(/^@/, ""))) list.push(m);
   const total = list.length;
   if (cfg.requireTag) list = list.filter(p => p.tagged);
   const seen = new Set(); const uniq = [];

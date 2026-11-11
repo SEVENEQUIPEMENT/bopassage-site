@@ -147,6 +147,10 @@ label.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:8px 0}
         <button class="btn ghost sm" id="republish-ig">Instagram seulement</button>
       </div>
       <div id="posts"></div>
+      <h2 style="margin-top:16px">Participants saisis à la main</h2>
+      <p class="muted" style="margin:0 0 6px">Meta masque la plupart des commentateurs à l'automate tant que l'app n'est pas validée. Colle ici les noms (un par ligne) : ils s'ajoutent à ceux lus automatiquement, sans doublon.</p>
+      <div class="row"><label style="flex:1">📸 Instagram<textarea id="m-ig" placeholder="@pseudo1&#10;@pseudo2" style="min-height:110px"></textarea></label><label style="flex:1">👍 Facebook<textarea id="m-fb" placeholder="Marie Dupont&#10;Jules Martin" style="min-height:110px"></textarea></label></div>
+      <div class="row"><button class="btn sm" id="savemanual">Enregistrer les participants</button><span class="muted" id="m-count"></span></div>
       <h2 style="margin-top:16px">Paliers (4 seuils, dans l'ordre des lots)</h2>
       <div class="row"><label style="flex:1">📸 Instagram <input type="text" id="t-ig" placeholder="300,500,700,1000"></label><label style="flex:1">👍 Facebook <input type="text" id="t-fb" placeholder="500,700,1000,1200"></label></div>
       <label class="chk" style="margin-top:12px"><input type="checkbox" id="c-enabled"> Jeu actif (tirages automatiques)</label>
@@ -208,7 +212,7 @@ function render(){
   if(c.at) $('#upd').textContent='Compteurs mis à jour le '+new Date(c.at).toLocaleString('fr-FR')+' · actualisation automatique toutes les heures';
   document.querySelectorAll('[data-key]').forEach(el=>el.onclick=()=>replay(S.draws[el.dataset.key]));
   // admin
-  if(S.config){ if(S.config.tiers){$('#t-ig').value=S.config.tiers.Instagram.join(',');$('#t-fb').value=S.config.tiers.Facebook.join(',');} $('#c-enabled').checked=S.config.enabled!==false; $('#c-autoPost').checked=S.config.autoPost!==false; $('#c-requireTag').checked=!!S.config.requireTag; }
+  if(S.config){ if(S.config.manual){$('#m-ig').value=(S.config.manual.Instagram||[]).join('\n');$('#m-fb').value=(S.config.manual.Facebook||[]).join('\n');} if(S.config.tiers){$('#t-ig').value=S.config.tiers.Instagram.join(',');$('#t-fb').value=S.config.tiers.Facebook.join(',');} $('#c-enabled').checked=S.config.enabled!==false; $('#c-autoPost').checked=S.config.autoPost!==false; $('#c-requireTag').checked=!!S.config.requireTag; }
   $('#resetkey').innerHTML=Object.keys(S.draws).map(k=>`<option value="${k}">${k} ${S.draws[k].pending?'(en attente)':'— '+S.draws[k].winner.name}</option>`).join('')||'<option>—</option>';
 }
 
@@ -270,6 +274,7 @@ $('#republish-ig').onclick=async()=>{$('#adm-err').textContent='';try{let r;for(
 let DRAFTS={};fetch('/drafts/index.json',{cache:'no-store'}).then(r=>r.json()).then(j=>{DRAFTS=j;$('#draftsel').innerHTML='<option value="">— Choisir un brouillon —</option>'+Object.entries(j).map(([k,v])=>`<option value="${k}">${v.label||k}</option>`).join('');}).catch(()=>{});
 $('#loaddraft').onclick=()=>{const d=DRAFTS[$('#draftsel').value];if(!d){$('#adm-err').textContent='Choisis un brouillon';return;}$('#p-img').value=d.image;$('#p-fb').value=d.Facebook;$('#p-ig').value=d.Instagram;toast('Brouillon chargé');};
 $('#p-go').onclick=async()=>{const img=$('#p-img').value.trim();if(!img){$('#adm-err').textContent='Image manquante';return;}if(!confirm('Publier maintenant sur '+($('#p-dofb').checked?'Facebook ':'')+($('#p-doig').checked?'Instagram':'')+' ?'))return;$('#p-go').disabled=true;$('#adm-err').textContent='';try{if($('#p-dofb').checked){await post({action:'post-fb',image:img,text:$('#p-fb').value});toast('Facebook publié ✔');}if($('#p-doig').checked){let r;for(let i=0;i<10;i++){r=await post({action:'post-ig',image:img,text:$('#p-ig').value});if(r.done)break;toast('Instagram traite l\'image… ('+(i+1)+')');}if(r&&r.done)toast('Instagram publié ✔');else $('#adm-err').textContent='Instagram n\'a pas fini : reclique Publier avec Facebook décoché.';}}catch(e){$('#adm-err').textContent=e.message}$('#p-go').disabled=false;};
+$('#savemanual').onclick=async()=>{const ig=$('#m-ig').value.split(/\n|,|;/).map(x=>x.trim()).filter(Boolean),fb=$('#m-fb').value.split(/\n|,|;/).map(x=>x.trim()).filter(Boolean);try{const r=await post({action:'config',config:{manual:{Instagram:ig,Facebook:fb}}});S=r;render();toast('Enregistré : '+ig.length+' Insta, '+fb.length+' FB — clique Synchroniser pour tirer');}catch(e){$('#adm-err').textContent=e.message}};
 $('#saveconf').onclick=async()=>{try{const r=await post({action:'config',config:{enabled:$('#c-enabled').checked,autoPost:$('#c-autoPost').checked,requireTag:$('#c-requireTag').checked,tiers:{Instagram:$('#t-ig').value.split(',').map(Number).filter(Boolean),Facebook:$('#t-fb').value.split(',').map(Number).filter(Boolean)}}});S=r;render();toast('Enregistré');}catch(e){$('#adm-err').textContent=e.message}};
 $('#resetdraw').onclick=async()=>{const k=$('#resetkey').value;if(!k||k==='—')return;try{const r=await post({action:'reset-draw',key:k});S=r;render();toast('Tirage annulé — il sera refait à la prochaine synchro');}catch(e){$('#adm-err').textContent=e.message}};
 
