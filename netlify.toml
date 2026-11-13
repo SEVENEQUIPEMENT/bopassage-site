@@ -14,3 +14,13 @@
   from = "/jeu"
   to = "/jeu.html"
   status = 200
+
+[[headers]]
+  for = "/jeu.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/drafts/*"
+  [headers.values]
+    Cache-Control = "no-cache"

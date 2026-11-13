@@ -8,8 +8,8 @@
  "programme-semaine": {
   "label": "Lundi · Programme de la semaine",
   "image": "https://bopassage.fr/img/soirees/programme-semaine.jpg",
-  "Instagram": "Cette semaine aux Arcades 🏛️\n\nMercredi · Afterwork 18h–21h\nJeudi · DJ Lounge dès 19h\nVendredi · Scène ouverte dès 20h\nSamedi · Nuit des Arcades jusqu'à 1h\nDimanche · Brunch sur réservation\n\nEt tous les midis, la table à l'étage. On vous attend.\n\n📍 17 Place du Marché, Roanne\n\n#BôPassage #Roanne #LesArcades #SortirARoanne",
-  "Facebook": "Cette semaine aux Arcades 🏛️\n\nMercredi · Afterwork 18h–21h\nJeudi · DJ Lounge dès 19h\nVendredi · Scène ouverte dès 20h\nSamedi · Nuit des Arcades jusqu'à 1h\nDimanche · Brunch sur réservation\n\nEt tous les midis, la table à l'étage. On vous attend.\n\n📍 17 Place du Marché, Roanne · 04 51 24 99 89\nL'abus d'alcool est dangereux pour la santé, à consommer avec modération."
+  "Instagram": "Cette semaine aux Arcades 🏛️\n\nMercredi · Afterwork 18h–21h\nJeudi · DJ Lounge dès 19h\nVendredi · Scène ouverte dès 20h\nSamedi · Nuit des Arcades jusqu'à 1h\nDimanche · Brunch sur réservation\nLundi · Fermé\n\nEt tous les midis, la table à l'étage. On vous attend.\n\n📍 17 Place du Marché, Roanne\n\n#BôPassage #Roanne #LesArcades #SortirARoanne",
+  "Facebook": "Cette semaine aux Arcades 🏛️\n\nMercredi · Afterwork 18h–21h\nJeudi · DJ Lounge dès 19h\nVendredi · Scène ouverte dès 20h\nSamedi · Nuit des Arcades jusqu'à 1h\nDimanche · Brunch sur réservation\nLundi · Fermé\n\nEt tous les midis, la table à l'étage. On vous attend.\n\n📍 17 Place du Marché, Roanne · 04 51 24 99 89\nL'abus d'alcool est dangereux pour la santé, à consommer avec modération."
  },
  "jeudi-lounge": {
   "label": "Jeudi · Jeudi Lounge",
@@ -46,5 +46,11 @@
   "image": "https://bopassage.fr/img/soirees/afterwork.jpg",
   "Instagram": "Mercredi, on sort du bureau et on descend sous les arcades. 🍹\n\nDe 18h à 21h : la formule afterwork, un cocktail + deux tapas. Entre collègues ou entre amis, on vous attend.\n\n📍 17 Place du Marché, Roanne\n\n#Afterwork #BôPassage #Roanne #LesArcades",
   "Facebook": "Mercredi, on sort du bureau et on descend sous les arcades. 🍹\n\nDe 18h à 21h : la formule afterwork, un cocktail + deux tapas. Entre collègues ou entre amis, on vous attend.\n\n📍 17 Place du Marché, Roanne · 04 51 24 99 89\nL'abus d'alcool est dangereux pour la santé, à consommer avec modération."
+ },
+ "brunch-dimanche": {
+  "label": "Dimanche · Brunch aux saveurs marocaines",
+  "image": "https://bopassage.fr/img/soirees/brunch-dimanche.jpg",
+  "Instagram": "☀️ BRUNCH AUX SAVEURS MAROCAINES — ce dimanche\n\nDe 10h30 à 15h : salé, sucré, pâtisseries orientales, œufs, thé à la menthe, jus frais et boissons chaudes à volonté. 25 € par personne, menu enfant disponible.\n\nUniquement sur réservation (il reste quelques tables) : message ici ou 04 51 24 99 89.\n\n📍 17 Place du Marché, Roanne\nL'équipe de Bô Passage vous attend 🥐🍊\n\n#Brunch #BrunchRoanne #BôPassage #Roanne #CuisineMarocaine #DimancheBrunch",
+  "Facebook": "☀️ BRUNCH AUX SAVEURS MAROCAINES — ce dimanche\n\nDe 10h30 à 15h : salé, sucré, pâtisseries orientales, œufs, thé à la menthe, jus frais et boissons chaudes à volonté. 25 € par personne, menu enfant disponible.\n\nUniquement sur réservation — il reste quelques tables : écrivez-nous ou appelez le 04 51 24 99 89.\n\nL'équipe de Bô Passage vous attend 🥐🍊\n\n📍 17 Place du Marché, Roanne · 04 51 24 99 89\nL'abus d'alcool est dangereux pour la santé, à consommer avec modération."
  }
 }
