@@ -24,3 +24,9 @@
   for = "/drafts/*"
   [headers.values]
     Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/videos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Accept-Ranges = "bytes"

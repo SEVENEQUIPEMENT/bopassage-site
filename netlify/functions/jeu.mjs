@@ -19,6 +19,30 @@ async function handle(req) {
   if (body.action === "reset-draw" && body.key) { delete st.draws[body.key]; await saveState(st); }
   if (body.action === "sync") { st = (await sync({ force: true })).state; }
   if (body.action === "posts") { await resolveIds(st.config); await saveState(st); const posts = await recentPosts(st.config); return J({ ok: true, posts }); }
+  if (body.action === "post-fb-video") {
+    await resolveIds(st.config);
+    const r = await gpost(`/${st.config.fbPageId}/videos`, { file_url: body.video, description: body.text || "", title: body.title || "" }, st.config.fbPageToken);
+    return J({ ok: true, fbVideoId: r.id });
+  }
+  if (body.action === "post-ig-video") {
+    await resolveIds(st.config);
+    if (!st.config.igPendingVideo) {
+      const c = await gpost(`/${st.config.igUserId}/media`, { media_type: "REELS", video_url: body.video, caption: body.text || "", share_to_feed: "true" });
+      st.config.igPendingVideo = c.id; await saveState(st);
+    }
+    const t0 = Date.now();
+    while (Date.now() - t0 < 6000) {
+      const r = await gget(`/${st.config.igPendingVideo}`, { fields: "status_code,status" });
+      if (r.status_code === "FINISHED") {
+        const pm = await gpost(`/${st.config.igUserId}/media_publish`, { creation_id: st.config.igPendingVideo });
+        st.config.igPendingVideo = ""; await saveState(st);
+        return J({ ok: true, done: true, igMediaId: pm.id });
+      }
+      if (r.status_code === "ERROR" || r.status_code === "EXPIRED") { st.config.igPendingVideo = ""; await saveState(st); return J({ error: "Instagram a refusé la vidéo : " + (r.status || r.status_code) }, 500); }
+      await new Promise(r => setTimeout(r, 1500));
+    }
+    return J({ ok: true, done: false });
+  }
   if (body.action === "post-fb") {
     await resolveIds(st.config);
     const fb = await gpost(`/${st.config.fbPageId}/photos`, { url: body.image, message: body.text || "" }, st.config.fbPageToken);
