@@ -1,8 +1,9 @@
-import { loadState, saveState, sync, resolveIds, recentPosts, publishLaunch, tiersFor, PLATFORMS, LAUNCH_TEXTS, gget, gpost } from "./_lib.mjs";
+import { loadState, saveState, sync, resolveIds, recentPosts, publishLaunch, tiersFor, PLATFORMS, LAUNCH_TEXTS, gget, gpost, runScheduled } from "./_lib.mjs";
 const J = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
 const pub = (st) => ({
   tiers: { Instagram: tiersFor("Instagram", st.config), Facebook: tiersFor("Facebook", st.config) }, platforms: PLATFORMS, counts: st.counts, lastError: st.lastError,
   log: st.log.slice(-200),
+  scheduled: (st.scheduled || []).map(j => ({ id: j.id, at: j.at, label: j.label, fb: j.fb, ig: j.ig, done: !!j.done, error: j.error || null, video: !!j.video })),
   draws: Object.fromEntries(Object.entries(st.draws).map(([k, d]) => [k, d.pending ? { pending: true, reason: d.reason } : { ...d, participants: d.participants, winner: { name: d.winner.name, permalink: d.winner.permalink || "" } }])),
   config: { autoPost: st.config.autoPost, requireTag: st.config.requireTag, enabled: st.config.enabled, igMediaId: st.config.igMediaId || "", fbPostId: st.config.fbPostId || "", igMediaIds: st.config.igMediaIds || [], fbPostIds: st.config.fbPostIds || [], manual: st.config.manual || { Instagram: [], Facebook: [] }, igUsername: st.config.igUsername, fbPageName: st.config.fbPageName, tiers: st.config.tiers },
 });
@@ -19,6 +20,15 @@ async function handle(req) {
   if (body.action === "reset-draw" && body.key) { delete st.draws[body.key]; await saveState(st); }
   if (body.action === "sync") { st = (await sync({ force: true })).state; }
   if (body.action === "posts") { await resolveIds(st.config); await saveState(st); const posts = await recentPosts(st.config); return J({ ok: true, posts }); }
+  if (body.action === "schedule") {
+    const j = body.job || {};
+    if (!j.at || (!j.image && !j.video)) return J({ error: "date ou média manquant" }, 400);
+    st.scheduled = st.scheduled || [];
+    st.scheduled.push({ id: Date.now().toString(36), at: j.at, label: (j.label || j.Facebook || j.Instagram || "").slice(0, 60), image: j.image || "", video: j.video || "", Facebook: j.Facebook || "", Instagram: j.Instagram || "", fb: j.fb !== false, ig: j.ig !== false, created: new Date().toISOString() });
+    await saveState(st); return J({ ok: true, ...pub(st) });
+  }
+  if (body.action === "unschedule" && body.id) { st.scheduled = (st.scheduled || []).filter(j => j.id !== body.id); await saveState(st); return J({ ok: true, ...pub(st) }); }
+  if (body.action === "run-scheduled") { await runScheduled(st); await saveState(st); return J({ ok: true, ...pub(st) }); }
   if (body.action === "post-fb-video") {
     await resolveIds(st.config);
     const r = await gpost(`/${st.config.fbPageId}/videos`, { file_url: body.video, description: body.text || "", title: body.title || "" }, st.config.fbPageToken);

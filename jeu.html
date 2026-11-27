@@ -163,7 +163,9 @@ label.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:8px 0}
       <label>Vidéo (URL .mp4 sur bopassage.fr — si renseignée, c'est la vidéo qui est publiée : post vidéo FB + Reel Instagram)</label><input type="text" id="p-vid" placeholder="https://bopassage.fr/videos/...">
       <label>Texte Facebook</label><textarea id="p-fb" style="min-height:120px"></textarea>
       <label>Texte Instagram</label><textarea id="p-ig" style="min-height:120px"></textarea>
-      <div class="row"><label class="chk"><input type="checkbox" id="p-dofb" checked> Facebook</label><label class="chk"><input type="checkbox" id="p-doig" checked> Instagram</label><button class="btn sm" id="p-go">📣 Publier</button></div>
+      <div class="row"><label class="chk"><input type="checkbox" id="p-dofb" checked> Facebook</label><label class="chk"><input type="checkbox" id="p-doig" checked> Instagram</label><button class="btn sm" id="p-go">📣 Publier maintenant</button></div>
+      <div class="row"><label>Ou programmer pour le <input type="datetime-local" id="p-at" style="width:auto;margin-left:6px"></label><button class="btn ghost sm" id="p-sched">🗓️ Programmer</button></div>
+      <div id="schedlist" class="hist" style="width:100%;text-align:left"></div>
       <h2 style="margin-top:16px">Annuler un tirage</h2>
       <div class="row"><select id="resetkey" style="max-width:320px"></select><button class="btn ghost sm" id="resetdraw">Annuler et retirer</button></div>
       <div class="err" id="adm-err"></div>
@@ -214,6 +216,7 @@ function render(){
   document.querySelectorAll('[data-key]').forEach(el=>el.onclick=()=>replay(S.draws[el.dataset.key]));
   // admin
   if(S.config){ if(S.config.manual){$('#m-ig').value=(S.config.manual.Instagram||[]).join('\n');$('#m-fb').value=(S.config.manual.Facebook||[]).join('\n');} if(S.config.tiers){$('#t-ig').value=S.config.tiers.Instagram.join(',');$('#t-fb').value=S.config.tiers.Facebook.join(',');} $('#c-enabled').checked=S.config.enabled!==false; $('#c-autoPost').checked=S.config.autoPost!==false; $('#c-requireTag').checked=!!S.config.requireTag; }
+  if(S.scheduled)renderSched();
   $('#resetkey').innerHTML=Object.keys(S.draws).map(k=>`<option value="${k}">${k} ${S.draws[k].pending?'(en attente)':'— '+S.draws[k].winner.name}</option>`).join('')||'<option>—</option>';
 }
 
@@ -278,6 +281,8 @@ $('#p-go').onclick=async()=>{const img=$('#p-img').value.trim(),vid=$('#p-vid').
  if($('#p-dofb').checked){await post(vid?{action:'post-fb-video',video:vid,text:$('#p-fb').value}:{action:'post-fb',image:img,text:$('#p-fb').value});toast('Facebook publié ✔');}
  if($('#p-doig').checked){let r;for(let i=0;i<40;i++){r=await post(vid?{action:'post-ig-video',video:vid,text:$('#p-ig').value}:{action:'post-ig',image:img,text:$('#p-ig').value});if(r.done)break;toast('Instagram traite '+(vid?'la vidéo':'l\'image')+'… ('+(i+1)+')');}if(r&&r.done)toast('Instagram publié ✔');else $('#adm-err').textContent='Instagram n\'a pas fini : reclique Publier avec Facebook décoché.';}
 }catch(e){$('#adm-err').textContent=e.message}$('#p-go').disabled=false;};
+$('#p-sched').onclick=async()=>{const at=$('#p-at').value;const img=$('#p-img').value.trim(),vid=$('#p-vid').value.trim();if(!at){$('#adm-err').textContent='Choisis une date et une heure';return;}if(!img&&!vid){$('#adm-err').textContent='Image ou vidéo manquante';return;}try{const label=($('#draftsel').selectedOptions[0]&&$('#draftsel').value)?$('#draftsel').selectedOptions[0].textContent:$('#p-fb').value.slice(0,50);const r=await post({action:'schedule',job:{at:new Date(at).toISOString(),label,image:img,video:vid,Facebook:$('#p-fb').value,Instagram:$('#p-ig').value,fb:$('#p-dofb').checked,ig:$('#p-doig').checked}});S=r;render();toast('Programmé pour le '+new Date(at).toLocaleString('fr-FR'));}catch(e){$('#adm-err').textContent=e.message}};
+function renderSched(){const l=(S.scheduled||[]);$('#schedlist').innerHTML=l.length?'<h2 style="margin-top:12px">Publications programmées</h2><ul>'+l.map(j=>`<li><span>${j.done?'✅':j.error?'⚠️':'🕒'} ${new Date(j.at).toLocaleString('fr-FR',{dateStyle:'short',timeStyle:'short'})} — ${(j.label||'').replace(/</g,'&lt;')} ${j.video?'🎬':''}${j.error?'<br><span class="err">'+j.error+'</span>':''}</span><span>${j.done?'':`<button class="btn ghost sm" data-unsched="${j.id}">Annuler</button>`}</span></li>`).join('')+'</ul><p class="muted">Publiées automatiquement à l\'heure pile qui suit la date choisie (vérification toutes les heures).</p>':'';document.querySelectorAll('[data-unsched]').forEach(b=>b.onclick=async()=>{const r=await post({action:'unschedule',id:b.dataset.unsched});S=r;render();toast('Programmation annulée');});}
 $('#saveconf').onclick=async()=>{try{const r=await post({action:'config',config:{enabled:$('#c-enabled').checked,autoPost:$('#c-autoPost').checked,requireTag:$('#c-requireTag').checked,tiers:{Instagram:$('#t-ig').value.split(',').map(Number).filter(Boolean),Facebook:$('#t-fb').value.split(',').map(Number).filter(Boolean)}}});S=r;render();toast('Enregistré');}catch(e){$('#adm-err').textContent=e.message}};
 $('#resetdraw').onclick=async()=>{const k=$('#resetkey').value;if(!k||k==='—')return;try{const r=await post({action:'reset-draw',key:k});S=r;render();toast('Tirage annulé — il sera refait à la prochaine synchro');}catch(e){$('#adm-err').textContent=e.message}};
 

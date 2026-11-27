@@ -23,6 +23,7 @@ export async function loadState() {
   return {
     counts: st.counts || { Instagram: null, Facebook: null, at: null },
     log: st.log || [],                // [{at, Instagram, Facebook}]
+    scheduled: st.scheduled || [],    // publications programmées
     draws: st.draws || {},            // {"Instagram-300": {...}}
     config: { igMediaId: "", fbPostId: "", autoPost: true, requireTag: false, enabled: true, tiers: DEFAULT_TIERS, ...(st.config || {}) },
     lastError: st.lastError || null,
@@ -196,6 +197,7 @@ export async function sync({ force = false } = {}) {
     }
     st.lastError = null;
   } catch (e) { st.lastError = { at: new Date().toISOString(), message: e.message }; }
+  try { await runScheduled(st); } catch (e) { st.lastError = { at: new Date().toISOString(), message: "programmation : " + e.message }; }
   await saveState(st);
   return { state: st, news };
 }
@@ -268,3 +270,32 @@ L'équipe de Bô Passage vous attend ! 🏛️
 
 Jeu gratuit sans obligation d'achat, réservé aux majeurs. Facebook n'est ni organisateur ni parrain de ce jeu. L'abus d'alcool est dangereux pour la santé.`
 };
+
+/** Publie les publications programmées arrivées à échéance (appelé à chaque synchro horaire). */
+export async function runScheduled(st) {
+  const now = Date.now();
+  const list = st.scheduled || [];
+  for (const job of list) {
+    if (job.done || job.error) continue;
+    if (new Date(job.at).getTime() > now) continue;
+    try {
+      await resolveIds(st.config);
+      if (job.fb && !job.fbId) {
+        if (job.video) { const r = await gpost(`/${st.config.fbPageId}/videos`, { file_url: job.video, description: job.Facebook || "" }, st.config.fbPageToken); job.fbId = r.id; }
+        else { const r = await gpost(`/${st.config.fbPageId}/photos`, { url: job.image, message: job.Facebook || "" }, st.config.fbPageToken); job.fbId = r.post_id || r.id; }
+      }
+      if (job.ig && !job.igId) {
+        if (!job.igContainer) {
+          const params = job.video ? { media_type: "REELS", video_url: job.video, caption: job.Instagram || "", share_to_feed: "true" } : { image_url: job.image, caption: job.Instagram || "" };
+          const c = await gpost(`/${st.config.igUserId}/media`, params); job.igContainer = c.id;
+        }
+        const r = await gget(`/${job.igContainer}`, { fields: "status_code,status" });
+        if (r.status_code === "FINISHED") { const pm = await gpost(`/${st.config.igUserId}/media_publish`, { creation_id: job.igContainer }); job.igId = pm.id; }
+        else if (r.status_code === "ERROR" || r.status_code === "EXPIRED") { job.error = "Instagram : " + (r.status || r.status_code); }
+        // sinon : on réessaie à la prochaine synchro (le conteneur reste valable 24 h)
+      }
+      if ((!job.fb || job.fbId) && (!job.ig || job.igId)) { job.done = true; job.doneAt = new Date().toISOString(); }
+    } catch (e) { job.error = e.message; }
+  }
+  st.scheduled = list;
+}
